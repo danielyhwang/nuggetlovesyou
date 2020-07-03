@@ -1,19 +1,17 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+/**
+ * Set up express webserver
+ */
+const express = require("express")
+const port = process.env.PORT || 3000;
+const app = express()
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+app.get("*", (req, res) => {
+    res.send()
+})
+
+app.listen(port, () => {
+    console.log("Server is up on port", port)
+}) //starts up the default port
