@@ -4,14 +4,21 @@
   "description": "A good website for an even greater dog.",
   "main": "index.js",
   "scripts": {
-    "start": "node App.js",
-    "dev": "nodemon App.js"
+    "start": "node src/App.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon src/App.js"
   },
   "keywords": [],
   "author": "Daniel Hwang",
   "license": "ISC",
   "dependencies": {
-    "@primer/octicons": "^10.0.0",
-    "express": "^4.17.1"
+    "bootstrap": "^4.5.0",
+    "express": "^4.17.1",
+    "hbs": "^4.1.1",
+    "mongoose": "^5.9.23",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "nodemon": "^2.0.4"
   }
 }

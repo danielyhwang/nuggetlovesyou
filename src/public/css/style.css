@@ -1,0 +1,36 @@
+body, html {
+    height: 100%;
+}
+  
+#background { 
+    /* code courtesy of mdbootstrap.com */
+    /* The image used */
+    background-image: url("../assets/backgrounds/DukeChapel.jpg"); /*url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg");*/
+  
+    /* Full height */
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+/*
+#mainContent {
+    flex: 1;
+}
+*/
+
+#centerImage {
+    width: 75%;
+}
+
+@media (min-width: 900px) {
+    #centerImage {
+        width: 40%;
+    }
+}
+
+#caption {
+    
+}
