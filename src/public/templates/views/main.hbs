@@ -8,44 +8,136 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <!-- BEGIN MODIFICATIONS -->
-    <link rel="stylesheet" href="./css/style.css" />
-    <title>Nugget ♥s You</title> 
+    <!-- Font Awesome CSS -->
+    <link rel = "stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <title>Nugget ♥s You</title>
   </head>
   <body>
-    <!-- Website broken into three main components: Header, MainContent, Footer.
-    Header - contains top two buttons and title
-    MainContent - contains image with frame and caption (with quote and photo creds)
-    Footer - contains bottom two buttons
-    -->
-    <div id="background" class = "d-flex flex-column justify-content-between">
-        <div class = "d-flex flex-row justify-content-between">
-            <button type="button" class="btn btn-secondary rounded-circle m-1">A</button>
-            <div class="">Nugget Loves You</div>
-            <button type="button" class="btn btn-secondary rounded-circle m-1">B</button>
-        </div>
-        <div id = "mainContent" class = "d-flex flex-column justify-content-center">
-          <div class = "position-relative text-center">
-            <img id = "centerImage" class = "d-inline-block img-fluid" src = "./assets/nuggetPhotos/DukePond.jpg" alt = "Nugget at the pond during Memorial Day."/>
-            <p style = "position: absolute; bottom: 0px; right: 0px; text-align: right; margin: 0; ">Photo by Keith Upchurch</p>
+    <div class = "container-fluid d-flex flex-column" id = "background">
+      <div class = "d-flex flex-row justify-content-between">
+        <!-- SHARE BUTTON-->
+        <button type="button" class="btn btn-primary rounded-circle">
+          <i class = "fa fa-share topIcon"></i>
+        </button>
+
+        <!-- TITLE-->
+        <h1>Nugget Loves You</h1>
+
+        <!-- INFO MODAL-->
+        <button type="button" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#infoModal">
+          <i class = "fa fa-info-circle topIcon"></i>
+        </button>
+      </div>
+      <div class = "flex-fill d-flex flex-column justify-content-center">
+        <div class="text-center">
+          <div class = "d-inline-block position-relative">
+            <img src = "../../img/roughlySquareNugget.png" class = "img-fluid" alt = "Test!"/>
+            <div class = "lowerRightText mb-0">
+              Photo by Keith Upchurch
+            </div>
           </div>
         </div>
-
-        <div id = "caption" class = "mx-auto">
-          <p>The only thing we have to fear is fear itself. - FDR</p>
-        </div>
-        <div class = "d-flex flex-row justify-content-between">
-            <button type="button" class="btn btn-secondary rounded-circle m-1">C</button>
-            <button type="button" class="btn btn-secondary rounded-circle m-1">D</button>
-        </div>
+      </div>
+      
+      <div class = "d-flex flex-row justify-content-between">
+        <!-- CONTRIBUTE CONTENT (a text button redirecting users to google form or custom form.)-->
+        <button type="button" class="btn btn-primary m-1">Contribute Content!</button>
+        <!-- MUSIC CONTENT (a text button displaying current song. toggling it strikethroughs the text and stops it. Only one song plays on loop because I can't host a radio server.) -->
+        <!-- TODO: Toggle music upon clicking-->
+        <button type="button" class="btn btn-primary m-1 pausedText" id = "musicButton"><i class = "fa fa-music musicIcon"></i>: Quirky Dog - Kevin MacLeod</button>
+      </div>
     </div>
-    <!-- END MODIFICATIONS -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <!-- Our Custom JS -->
+    <!-- <script src="../../../../node_modules/howler/src/howler.core.js"> </script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.8/howler.js"></script>
+
+    <script src = "../../js/loadMainPage.js"></script>
+
+    <div class="modal hide fade in" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="infoModalLabel">Nugget Loves You</h3>
+            <!-- TODO: THIS ISN'T CLOSING-->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>A good website for an even greater dog.</h4>
+            <p>This website was created over the span of roughly one month (July 2020), inspired by the monthly pictures of Nugget sent to the Duke population's emails by her caretaker Keith Upchurch. 
+            Those emails would make any day or study session feel slightly better, and the only real regret I have as a Duke student is not having met her earlier. She cured my fear of dogs. And whenever
+            I had something on my mind, seeing Nugget wag her tail near the West Union entrance would bring some joy to my day. And I imagine the entire Duke community has become a better place thanks to her.
+            Amidst all the chaos that occurs on our campus, there is Nugget.</p>
+            <p>This website is intended to bring a little bit of Nugget's radiant happiness into your life. Whether you can't meet Nugget amidst the COVID pandemic, you need a little bit of motivation,
+            or want to make someone's day, I hope this website helps. Here's to you, Nugget. We love you.</p>
+            <a href = "https://github.com/whydaniel/nuggetlovesyou">Repo behind this project (with dev details) is available here.</a>
+            <br>
+            <br>
+            
+            <h4>About Keith and Nugget</h4>
+              <p><b>"When you're struggling through finals, remember the real reason you're here"</b> - Duke Memes for Gothic Teens, before it became toxic</p>
+              <ul>
+                <li>A beautiful <b>golden retriever</b>.</li>
+                <li>"With silky fur, lolling tongue, and [a] gregarious personality." - Chris Kuo</li>
+                <li>Described as:
+                  <ul>
+                    <li>"best symbol of Duke's unity and togetherness"</li>
+                    <li>"the Queen of Duke"</li>
+                    <li>"a celebrity/rockstar"</li>
+                  </ul>
+                <li>Born in 2010, Keith later picked her up at 10 weeks old</li>
+                <li>Loves water, squirrels, apples, and people.</li> 
+                <li>Her pelt smells like buttered toast.</li>
+                <li>Never barks nor freezes.</li> 
+                <li>Will handle any amount of petting you can give her.</li> 
+                <li>Once swallowed 31 snowballs on a (rare) snow day.</li>
+                <li>Amidst COVID pandemic, Keith and Nugget are making two daily walks to Duke.</li>
+                <li>The duo has gotten to know 2,000 students as of 2018.</li>
+                <li>Keith's Life Advice
+                  <ul>
+                    <li><b>"The best advice I can give to Duke students is to think hard about what you love and follow as a career."</b> - Keith</li>
+                    <li><b>"Having authentic friends is important, especially those who care about your problems and will listen to you... friendship is what matters."</b> - Keith</li>
+                  </ul>
+                </li>
+              </ul>
+              <p>This slug was created using personal knowledge and info 
+                <a href = "https://www.dukechronicle.com/article/2019/11/duke-nugget-dog-rockstar-keith-upchurch">from</a>
+                <a href = "https://www.dukechronicle.com/article/2020/03/duke-keith-nugget-pandemic-walking-durham-duke-students-dog"> these</a> 
+                <a href = "https://medium.com/dukestudents/advice-from-the-one-and-only-3d1ec4987884"> articles.</a>
+              </p>
+
+
+            <h4>Special Thanks</h4>
+            <ul>
+              <li>Nugget and Keith</li>
+              <li><a href = "https://woto.app">My friends over at WoTo</a> for forcing me to learn JavaScript. I still haven't recovered.</li>
+              <li>My friends who provided moral support.</li>
+              <li>All external sources of music + nugget photos (credited on site)</li>
+              <li>Beta Testers
+                <ul>
+                  <li>TBD</li>
+                </ul>
+              </li>
+              <li><a href = "https://www.udemy.com/course/the-complete-nodejs-developer-course-2/">Andrew Mead's excellent Udemy course that I pretty much used to create this website.</a></li>
+            </ul>
+
+            <p>Created by <a href = "https://github.com/whydaniel">whydaniel</a>. All inquiries to why dot daniel dot hwang at gmail dot com (no spaces between dots). </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>

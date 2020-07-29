@@ -5,7 +5,7 @@ body, html {
 #background { 
     /* code courtesy of mdbootstrap.com */
     /* The image used */
-    background-image: url("../assets/backgrounds/DukeChapel.jpg"); /*url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg");*/
+    background-image: url("../img/DukeChapel.jpg");
   
     /* Full height */
     height: 100%;
@@ -15,22 +15,39 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
 }
-/*
-#mainContent {
-    flex: 1;
-}
-*/
 
-#centerImage {
-    width: 75%;
+#background404 { 
+    /* code courtesy of mdbootstrap.com */
+    /* The image used */
+    background-image: url("../img/DukePond.jpg");
+  
+    /* Full height */
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-@media (min-width: 900px) {
-    #centerImage {
-        width: 40%;
-    }
+.lowerRightText {
+    position: absolute;
+    background-color: white;
+    bottom: 0px;
+    right: 0px;
+    font-size: 12px;
 }
 
-#caption {
-    
+.topIcon {
+    font-size: 30px;
+    height: 30px;
+    width: 30px;
+}
+
+.musicIcon {
+    font-size: 16px;
+}
+
+.pausedText{
+    text-decoration: line-through;
 }

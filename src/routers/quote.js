@@ -63,12 +63,12 @@ router.get("/quotes/:id", async (req, res) => {
   router.patch("/quotes/:id", async (req, res) => {
     //check if the fields in the request body match those of the image model. send an error if not.
     const currentFields = Object.keys(req.body)
-    const validUpdates = ["photographer", "descriptionAlt" , "imageData"]
+    const validUpdates = ["quote", "author"]
     const isValidOperation = currentFields.every((field) => {
         return validUpdates.includes(field)
     })
     if (!isValidOperation){
-        return res.status(400).send({"Error": "Invalid field included. Please make sure the fields you're updating are part of the Image model."})
+        return res.status(400).send({"Error": "Invalid field included. Please make sure the fields you're updating are part of the Quote model."})
     }
 
     //search 
@@ -76,17 +76,17 @@ router.get("/quotes/:id", async (req, res) => {
     try{
         //const task = await Task.findByIdAndUpdate(_id, req.body, {new: true, runValidators: true})
         //replaced by middleware
-        const task = await Task.findOne({_id, author: req.user._id})
+        const quote = await Quote.findOne({_id, author: req.user._id})
 
-        if (!task){
+        if (!quote){
             return res.status(404).send()
         }
 
         currentFields.forEach((field) => {
-            task[field] = req.body[field]
+            quote[field] = req.body[field]
         })
-        await task.save()
-        res.status(200).send(task)
+        await quote.save()
+        res.status(200).send(quote)
     }
     catch(e){
         console.log(e)
@@ -97,14 +97,14 @@ router.get("/quotes/:id", async (req, res) => {
    /**
     * Delete image in the database by id.
     */
-   router.delete("/images/:id", async (req, res) => {
+   router.delete("/quotes/:id", async (req, res) => {
         const _id = req.params.id
         try {
-            const image = await Image.findOneAndDelete({_id})
-            if (!image){
+            const quote = await Quote.findOneAndDelete({_id})
+            if (!quote){
                 return res.status(404).send()
             }
-            res.send(image)
+            res.send(quote)
         }catch (e){
             res.status(500).send(e)
         }   

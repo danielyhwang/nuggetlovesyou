@@ -26,10 +26,16 @@ const imageSchema = new mongoose.Schema({
     imageData: {
         type: Buffer,
         required: true,
+    },
+    publicCode: {
+        type: String,
+        required: false
     }
 }, {
     timestamps: true
 })
+
+
 
 /**
  * Store our blueprint into a model [the actual object stored in the database] and export it. 
