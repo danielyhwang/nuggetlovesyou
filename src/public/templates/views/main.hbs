@@ -20,7 +20,7 @@
     <div class = "container-fluid d-flex flex-column" id = "background">
       <div class = "d-flex flex-row justify-content-between">
         <!-- SHARE BUTTON-->
-        <button type="button" class="btn btn-primary rounded-circle">
+        <button type="button" class="btn btn-primary rounded-circle" data-toggle = "modal" data-target = "#shareModal">
           <i class = "fa fa-share topIcon"></i>
         </button>
 
@@ -35,7 +35,7 @@
       <div class = "flex-fill d-flex flex-column justify-content-center">
         <div class="text-center">
           <div class = "d-inline-block position-relative">
-            <img src = "../../img/roughlySquareNugget.png" class = "img-fluid" alt = "Test!"/>
+            <img src = "../../img/roughlySquareNugget.png" style = "height: 300px;" alt = "Test!"/>
             <div class = "lowerRightText mb-0">
               Photo by Keith Upchurch
             </div>
@@ -64,12 +64,60 @@
 
     <script src = "../../js/loadMainPage.js"></script>
 
+    <!-- SHARE MODAL -->
+    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="shareModalLabel">Share</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex flex-row justify-content-between" aria-label="Share Links">
+              <a href = "https://www.facebook.com/sharer/sharer.php?u=https://www.nuggetlovesyou.com" 
+                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+                <i class = "fa fa-facebook" style = "color: #3B5998"></i>
+              </a>
+              <a href = "https://twitter.com/home?status=https://www.nuggetlovesyou.com" 
+                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+                <i class = "fa fa-twitter" style = "color: #1DA1F2"></i>
+              </a>
+              <a href = "https://pinterest.com/pin/create/button/?url=https://www.nuggetlovesyou.com&media=&description="
+                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+                <i class = "fa fa-pinterest" style = "color: #BD081C"></i>
+              </a>
+              <a href = "https://www.linkedin.com/shareArticle?mini=true&url=https://www.nuggetlovesyou.com&title=&summary=&source="
+                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+                  <i class = "fa fa-linkedin" style = "color: #0E76A8"></i>
+              </a>
+              <a href = "mailto:info@example.com?&subject=&body=https://www.nuggetlovesyou.com" 
+                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+                  <i class = "fa fa-envelope" style = "color: #808080"></i>
+              </a>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <h5 class="modal-title mr-auto">Link to the website!</h5>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id = "linkURL" value= "https://nuggetlovesyou.com" aria-label="linkURL" aria-describedby="linkURL" disabled />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type = "button" id="copy-addon" onclick = "copyLinkToClipboard()"><i class = "fa fa-copy"></i></span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO MODAL -->
     <div class="modal hide fade in" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-      <div class="modal-dialog-scrollable">
+      <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h3 class="modal-title" id="infoModalLabel">Nugget Loves You</h3>
-            <!-- TODO: THIS ISN'T CLOSING-->
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -118,7 +166,6 @@
                 <a href = "https://medium.com/dukestudents/advice-from-the-one-and-only-3d1ec4987884"> articles.</a>
               </p>
 
-
             <h4>Special Thanks</h4>
             <ul>
               <li>Nugget and Keith</li>
@@ -138,6 +185,8 @@
         </div>
       </div>
     </div>
+
+    <!-- CONTRIBUTE CONTENT MODAL -->
 
   </body>
 </html>

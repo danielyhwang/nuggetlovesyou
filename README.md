@@ -19,19 +19,13 @@ whydaniel july + august 2020
 - Set up main loading page
  - quote, border, photoAuthor
  - corner buttons and functionalities
-- Set up google form and corresponding spreadsheet (unreviewed, accepted, rejected, modify, modified, delete, deleted)
-- Set up mongodb with google forms
 - Do some styling
-- Deploy website on gcloud or heroku.
-
-## Things to do: sub features
+- Deploy website on heroku 
+- Buy domain
 - Download bootstrap and online scripts locally
-- Format top icon buttons
 - Polish the form
-- open up transparent log to share app!
 - Add contribute features link to google form
 - Add middleware as needed for the above.
-- Do some more styling
 - Create 404 page
 - Deploy website again
 

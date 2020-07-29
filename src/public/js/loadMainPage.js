@@ -17,3 +17,10 @@ musicButton.addEventListener("click", function () {
     }
     musicButton.classList.toggle("pausedText")
 })
+
+function copyLinkToClipboard() {
+    //credits: 30secondsofcode.org
+    var copyText = document.getElementById("linkURL")
+    navigator.clipboard.writeText(copyText.value)
+
+}
