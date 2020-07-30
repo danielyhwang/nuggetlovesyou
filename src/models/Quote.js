@@ -22,6 +22,11 @@
          required: true,
          trim: true
      },
+     verified: {
+         type: Boolean,
+         required: true,
+         default: false
+     }
  }, {
      timestamps: true
  })

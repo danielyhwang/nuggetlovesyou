@@ -34,20 +34,26 @@
       </div>
       <div class = "flex-fill d-flex flex-column justify-content-center">
         <div class="text-center">
-          <div class = "d-inline-block position-relative">
-            <img src = "../../img/roughlySquareNugget.png" style = "height: 300px;" alt = "Test!"/>
-            <div class = "lowerRightText mb-0">
-              Photo by Keith Upchurch
+          <div id = "imageFrame">
+            <div class = "d-inline-block position-relative">
+              <img src = "../../img/roughlySquareNugget.png" style = "height: 300px;" alt = "Test!"/>
+              <div class = "lowerRightText mb-0">
+                Photo by Keith Upchurch
+              </div>
             </div>
+          </div>
+          <div id = "quoteFrame">
+            
           </div>
         </div>
       </div>
       
       <div class = "d-flex flex-row justify-content-between">
         <!-- CONTRIBUTE CONTENT (a text button redirecting users to google form or custom form.)-->
-        <button type="button" class="btn btn-primary m-1">Contribute Content!</button>
+        <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target = "#formModal">
+          Contribute Content!
+        </button>
         <!-- MUSIC CONTENT (a text button displaying current song. toggling it strikethroughs the text and stops it. Only one song plays on loop because I can't host a radio server.) -->
-        <!-- TODO: Toggle music upon clicking-->
         <button type="button" class="btn btn-primary m-1 pausedText" id = "musicButton"><i class = "fa fa-music musicIcon"></i>: Quirky Dog - Kevin MacLeod</button>
       </div>
     </div>
@@ -76,23 +82,23 @@
           </div>
           <div class="modal-body">
             <div class="d-flex flex-row justify-content-between" aria-label="Share Links">
-              <a href = "https://www.facebook.com/sharer/sharer.php?u=https://www.nuggetlovesyou.com" 
+              <a href = "https://www.facebook.com/sharer/sharer.php?u=https://www.nuggetlovesyou.herokuapp.com" 
                 role="button" class="btn btn-lg btn-outline-primary rounded-circle">
                 <i class = "fa fa-facebook" style = "color: #3B5998"></i>
               </a>
-              <a href = "https://twitter.com/home?status=https://www.nuggetlovesyou.com" 
+              <a href = "https://twitter.com/home?status=https://www.nuggetlovesyou.herokuapp.com" 
                 role="button" class="btn btn-lg btn-outline-primary rounded-circle">
                 <i class = "fa fa-twitter" style = "color: #1DA1F2"></i>
               </a>
-              <a href = "https://pinterest.com/pin/create/button/?url=https://www.nuggetlovesyou.com&media=&description="
+              <a href = "https://pinterest.com/pin/create/button/?url=https://www.nuggetlovesyou.herokuapp.com&media=&description="
                 role="button" class="btn btn-lg btn-outline-primary rounded-circle">
                 <i class = "fa fa-pinterest" style = "color: #BD081C"></i>
               </a>
-              <a href = "https://www.linkedin.com/shareArticle?mini=true&url=https://www.nuggetlovesyou.com&title=&summary=&source="
+              <a href = "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nuggetlovesyou.herokuapp.com"
                 role="button" class="btn btn-lg btn-outline-primary rounded-circle">
                   <i class = "fa fa-linkedin" style = "color: #0E76A8"></i>
               </a>
-              <a href = "mailto:info@example.com?&subject=&body=https://www.nuggetlovesyou.com" 
+              <a href = "mailto:info@example.com?&subject=&body=https://www.nuggetlovesyou.herokuapp.com" 
                 role="button" class="btn btn-lg btn-outline-primary rounded-circle">
                   <i class = "fa fa-envelope" style = "color: #808080"></i>
               </a>
@@ -101,7 +107,7 @@
           <div class="modal-footer">
             <h5 class="modal-title mr-auto">Link to the website!</h5>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" id = "linkURL" value= "https://nuggetlovesyou.com" aria-label="linkURL" aria-describedby="linkURL" disabled />
+              <input type="text" class="form-control" id = "linkURL" value= "https://nuggetlovesyou.herokuapp.com" aria-label="linkURL" aria-describedby="linkURL" disabled />
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type = "button" id="copy-addon" onclick = "copyLinkToClipboard()"><i class = "fa fa-copy"></i></span>
               </div>
@@ -180,13 +186,73 @@
               <li><a href = "https://www.udemy.com/course/the-complete-nodejs-developer-course-2/">Andrew Mead's excellent Udemy course that I pretty much used to create this website.</a></li>
             </ul>
 
-            <p>Created by <a href = "https://github.com/whydaniel">whydaniel</a>. All inquiries to why dot daniel dot hwang at gmail dot com (no spaces between dots). </p>
+            <p>Created by <a href = "https://github.com/whydaniel">whydaniel</a>. All inquiries to why dot daniel dot hwang at gmail dot com (no spaces between dots).</p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- CONTRIBUTE CONTENT MODAL -->
+    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="formModalLabel">Contribute Content!</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Thank you for contributing content to Nugget Loves You. Please choose which content you'd like to submit.</p>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#imageForm" role="tab" aria-controls="imageForm" aria-selected="true">Image</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#quoteForm" role="tab" aria-controls="quoteForm" aria-selected="false">Quote</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <!-- IMAGE FORM-->
+              <div class="tab-pane fade show active" id="imageForm" role="tabpanel" aria-labelledby="home-tab">
+                <form>
+                  <div class="form-group">
+                    <label for="photographerField">Name (gotta give you photo creds!)</label>
+                    <input type="text" class="form-control" id="photographerField" placeholder="???">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlFile1">Upload Nugget Photo Here</label>
+                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                  </div>
+                  <div class="form-group">
+                    <label for="descriptionField">Description (short 1-sentence summary of what's in your photo).</label>
+                    <input type="text" class="form-control" id="descriptionField" placeholder="FDR">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+              <!-- QUOTE FORM-->
+              <div class="tab-pane fade" id="quoteForm" role="tabpanel" aria-labelledby="profile-tab">
+                <form>
+                  <div class="form-group">
+                    <label for="quoteField">Quote (should be maximum 140 characters).</label>
+                    <input type="text" class="form-control" id="quoteField" placeholder="The only thing we have to fear is fear itself.">
+                  </div>
+                  <div class="form-group">
+                    <label for="authorField">Author (who said the quote?)</label>
+                    <input type="text" class="form-control" id="authorField" placeholder="FDR">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Submit!</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </body>
 </html>

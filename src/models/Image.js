@@ -27,9 +27,10 @@ const imageSchema = new mongoose.Schema({
         type: Buffer,
         required: true,
     },
-    publicCode: {
-        type: String,
-        required: false
+    verified:{
+        type: Boolean,
+        required: true,
+        default: false,
     }
 }, {
     timestamps: true
