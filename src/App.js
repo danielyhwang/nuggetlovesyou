@@ -59,6 +59,8 @@ app.use(express.json())
 app.use(imageRouter)
 app.use(quoteRouter)
 
+//This allows us to extract the data contained in POST requests using express.urlencoded middleware
+app.use(express.urlencoded({extended: true}))
 
 /**
  * Default route - what the user will see upon arrival. See main.hbs

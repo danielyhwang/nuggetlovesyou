@@ -1,113 +1,101 @@
 /**
   * This file contains the core logic between the different requests to the database for the Quote model.
   * In other words, this file contains the CRUD (Create, Remove, Update, Delete) functionality of the Quote model.
-  * A lot of these pages will be deprecated as the data will be stored on Google Sheets.
   */
 
-  /**
-   * Imports needed for this file. 
-   * Requests are handled via an express router [runs code depending on which page you visit]
-   * Quote model needed to search the Image database.
-   */
-  const express = require("express")
-  const router = new express.Router()
-  const Quote = require("../models/Quote")
-
-  /**
-   * Create an Quote (with quote + author fields) given valid data from a request and save it to the database.
-   */
-  router.post("/quotes", async (req, res) => {
-      const quote = new quote(req.body)
-      try {
-          await quote.save()
-          res.status(201).send(quote)
-      }
-      catch (e){
-          res.status(400).send(e)
-      }
-  })
-  /**
-   * Read all Quote data in the database.
-   */
-  router.get("/quotes", async (req, res) => {
-    try {
-        const images = await Quote.find({})
-        res.status(200).send(quotes)
-    }
-    catch (e){
-        res.status(400).send(e)
-    }
-  })
+/**
+ * Imports needed for this file. 
+ * Requests are handled via an express router [runs code depending on which page you visit]
+ * Quote model needed to search the Image database.
+ */
+const express = require("express")
+const router = new express.Router()
+const Quote = require("../models/Quote")
 
 /**
- * Read an Quote by ID.
+ * Create an Quote (with quote + author fields) given valid data from a request and save it to the database.
+ * Quote is automatically unverified upon entry.
  */
-router.get("/quotes/:id", async (req, res) => {
-    const _id = req.params.id
-    try{
-        const quote = await Quote.findOne({_id})
-        if (!quote){
-            return res.status(404).send(quote)
-        }
-        res.send(quote)
+router.post("/quotes", async (req, res) => {
+    console.log(req.body);
+    res.status(200).send("recieved your request!");
+    /** 
+    const quote = new Quote(req.body.quote)
+    quote.verified = false;
+    try {
+        await quote.save()
+        res.status(201).send(quote)
     }
-    catch(e){
-        res.status(500).send(e)
+    catch (e) {
+        res.status(400).send(e)
+    }
+    */
+})
+
+/**
+ * Read a random quote from the database. 
+ */
+router.get("/randomQuote", async (req, res) => {
+    try {
+        const randomQuotes = await Quote.aggregate([{ $match: { verified: true} }, {$sample: { size: 1 } }]) //https://stackoverflow.com/questions/2824157/random-record-from-mongodb
+        const firstRandomQuote = randomQuotes[0]
+        res.status(200).send(firstRandomQuote)
+    }
+    catch (e) {
+        res.status(400).send(e)
     }
 })
 
-//UPDATE POINT - NEED TO UPDATE UP TO BELOW
-  /**
-   * Update image in the database by id.
-   */
-  router.patch("/quotes/:id", async (req, res) => {
-    //check if the fields in the request body match those of the image model. send an error if not.
+/**
+ * Update quote in the database by id. Admin permissions required.
+ */
+router.patch("/quotes/:id", async (req, res) => {
+    //check if the fields in the request body match those of the quote model. send an error if not.
     const currentFields = Object.keys(req.body)
-    const validUpdates = ["quote", "author"]
+    const validUpdates = ["quote", "author", "verified"]
     const isValidOperation = currentFields.every((field) => {
         return validUpdates.includes(field)
     })
-    if (!isValidOperation){
-        return res.status(400).send({"Error": "Invalid field included. Please make sure the fields you're updating are part of the Quote model."})
+    if (!isValidOperation) {
+        return res.status(400).send({ "Error": "Invalid field included. Please make sure the fields you're updating are part of the Quote model." })
     }
 
-    //search 
+    //store the id to search from
     const _id = req.params.id
-    try{
-        //const task = await Task.findByIdAndUpdate(_id, req.body, {new: true, runValidators: true})
-        //replaced by middleware
-        const quote = await Quote.findOne({_id, author: req.user._id})
+    try {
+        //find quote with matching ID
+        const quote = await Quote.findById(_id)
 
-        if (!quote){
+        if (!quote) {
             return res.status(404).send()
         }
-
+        //update the quote
         currentFields.forEach((field) => {
             quote[field] = req.body[field]
         })
         await quote.save()
         res.status(200).send(quote)
     }
-    catch(e){
+    catch (e) {
         console.log(e)
         res.status(500).send(e)
     }
-  })
+})
 
-   /**
-    * Delete image in the database by id.
-    */
-   router.delete("/quotes/:id", async (req, res) => {
-        const _id = req.params.id
-        try {
-            const quote = await Quote.findOneAndDelete({_id})
-            if (!quote){
-                return res.status(404).send()
-            }
-            res.send(quote)
-        }catch (e){
-            res.status(500).send(e)
-        }   
-    })
+/**
+ * Delete image in the database by id. Admin permissions required.
+ */
+router.delete("/quotes/:id", async (req, res) => {
+    const _id = req.params.id
+    try {
+        const quote = await Quote.findByIdAndDelete(_id)
+        if (!quote) {
+            return res.status(404).send()
+        }
+        res.send(quote)
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
 
-  module.exports = router
+module.exports = router

@@ -1,9 +1,10 @@
 /**
  * The object representation of an Quote in our MongoDB database.
  * 
- * Two properties [all required]:
+ * Three properties [all required]:
  * quote: The main quote itself. [format: Text block, NO QUOTATION MARKS]
  * author: The person/entity who is credited for the quote [format: Firstname Lastname]
+ * verified: Whether or not the data is approved to leave the database. This property is changed by admin only.
  */
 
  /**
@@ -24,7 +25,6 @@
      },
      verified: {
          type: Boolean,
-         required: true,
          default: false
      }
  }, {

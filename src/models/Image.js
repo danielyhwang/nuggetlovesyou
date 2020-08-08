@@ -1,10 +1,11 @@
 /**
  * The object representation of an Image in our MongoDB database.
  * 
- * Three properties [all required]:
+ * Four properties [all required]:
  * photographer - name of person who took photo [format: Firstname Lastname]
  * descriptionAlt - a brief one-sentence description of your image. Will be displayed in case image doesn't display (somehow).
  * imageData - the actual image itself. Stored as a buffer.
+ * verified: Whether or not the data is approved to leave the database. This property is changed by admin only.
  */
 
  /**

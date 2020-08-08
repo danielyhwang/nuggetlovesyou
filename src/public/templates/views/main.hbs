@@ -32,18 +32,21 @@
           <i class = "fa fa-info-circle topIcon"></i>
         </button>
       </div>
-      <div class = "flex-fill d-flex flex-column justify-content-center">
+      <!-- MAIN CONTENT -->
+      <div class = "flex-fill d-flex flex-column align-items-center justify-content-center">
         <div class="text-center">
+          <!-- IMAGE -->
           <div id = "imageFrame">
             <div class = "d-inline-block position-relative">
-              <img src = "../../img/roughlySquareNugget.png" style = "height: 300px;" alt = "Test!"/>
+              <img id = "nuggetPhoto" src = "../../img/roughlySquareNugget.png" style = "height: 300px;" alt = "Test!"/>
               <div class = "lowerRightText mb-0">
                 Photo by Keith Upchurch
               </div>
             </div>
           </div>
-          <div id = "quoteFrame">
-            
+          <!-- QUOTE -->
+          <div id = "displayedQuote">
+            The only thing we have to fear is fear itself. - FDR
           </div>
         </div>
       </div>
@@ -159,12 +162,6 @@
                 <li>Once swallowed 31 snowballs on a (rare) snow day.</li>
                 <li>Amidst COVID pandemic, Keith and Nugget are making two daily walks to Duke.</li>
                 <li>The duo has gotten to know 2,000 students as of 2018.</li>
-                <li>Keith's Life Advice
-                  <ul>
-                    <li><b>"The best advice I can give to Duke students is to think hard about what you love and follow as a career."</b> - Keith</li>
-                    <li><b>"Having authentic friends is important, especially those who care about your problems and will listen to you... friendship is what matters."</b> - Keith</li>
-                  </ul>
-                </li>
               </ul>
               <p>This slug was created using personal knowledge and info 
                 <a href = "https://www.dukechronicle.com/article/2019/11/duke-nugget-dog-rockstar-keith-upchurch">from</a>
@@ -206,16 +203,16 @@
             <p>Thank you for contributing content to Nugget Loves You. Please choose which content you'd like to submit.</p>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#imageForm" role="tab" aria-controls="imageForm" aria-selected="true">Image</a>
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#imageFormContainer" role="tab" aria-controls="imageForm" aria-selected="true">Image</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#quoteForm" role="tab" aria-controls="quoteForm" aria-selected="false">Quote</a>
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#quoteFormContainer" role="tab" aria-controls="quoteForm" aria-selected="false">Quote</a>
               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
               <!-- IMAGE FORM-->
-              <div class="tab-pane fade show active" id="imageForm" role="tabpanel" aria-labelledby="home-tab">
-                <form>
+              <div class="tab-pane fade show active" id="imageFormContainer" role="tabpanel" aria-labelledby="home-tab">
+                <form id = "imageForm" name = "imageForm">
                   <div class="form-group">
                     <label for="photographerField">Name (gotta give you photo creds!)</label>
                     <input type="text" class="form-control" id="photographerField" placeholder="???">
@@ -232,15 +229,15 @@
                 </form>
               </div>
               <!-- QUOTE FORM-->
-              <div class="tab-pane fade" id="quoteForm" role="tabpanel" aria-labelledby="profile-tab">
-                <form>
+              <div class="tab-pane fade" id="quoteFormContainer" role="tabpanel" aria-labelledby="profile-tab">
+                <form id = "quoteForm">
                   <div class="form-group">
-                    <label for="quoteField">Quote (should be maximum 140 characters).</label>
-                    <input type="text" class="form-control" id="quoteField" placeholder="The only thing we have to fear is fear itself.">
+                    <label for="quoteFormQuote" class = "control-label">Quote (should be maximum 140 characters).</label>
+                    <input id = "quoteFormQuote" name = "quote" type="text" class="form-control" placeholder="The only thing we have to fear is fear itself.">
                   </div>
                   <div class="form-group">
-                    <label for="authorField">Author (who said the quote?)</label>
-                    <input type="text" class="form-control" id="authorField" placeholder="FDR">
+                    <label for="quoteFormAuthor" class = "control-label">Author (who said the quote?)</label>
+                    <input id = "quoteFormAuthor" name = "author" type="text" class="form-control" placeholder="FDR">
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

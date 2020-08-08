@@ -3,9 +3,9 @@
 whydaniel july + august 2020
 
 ## Packages used
-- Overview: Bootstrap frontend with NodeJS and MongoDB backend. Support with Google Forms.
+- Overview: Bootstrap frontend with NodeJS and MongoDB backend. 
 ### Frontend
-- bootstrap (decided to download locally, don't know sass.)
+- bootstrap (main css styling, decided to download locally, don't know sass.)
 - fontawesome (icons!)
 ### Backend
 - howler (used to play lovely audio.)
@@ -16,9 +16,8 @@ whydaniel july + august 2020
 - nodemon (run script over and over again)
 
 ## REMAINING TASK LIST
-- Quote functionality
-- Load random quote and image from the database into the app
-- Configure quote form to post to database
+- Load random image from the database into the app
+- Configure quote form to post to database - do data validation
 - Configure image form to post to database - do data validation
 - Deploy website on heroku
 - Create user model and middleware auth to add to everything else
