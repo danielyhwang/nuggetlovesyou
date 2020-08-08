@@ -4,6 +4,8 @@
 window.onload=function(){
     const quoteForm = document.getElementById("quoteForm")
     quoteForm.addEventListener("submit", submitQuote)
+    const imageForm = document.getElementById("imageForm")
+    imageForm.addEventListener("submit", submitImage)
 }
 
 /**
@@ -49,20 +51,97 @@ fetch("/randomQuote").then((response) => {
     }
 })
 
-
+/**
+ * Loading in random image
+ */
+const nuggetPhoto = document.getElementById("nuggetPhoto")
+fetch("/randomImage").then((response) => {
+    //only load in image if response is nonempty
+    if(Object.keys(response).length){
+        response.json().then((data) => {
+            nuggetPhoto = data.imageData
+        })
+    }
+})
 
 /**
  * Submitting new quote to the database
  * Used in window.onload
  */
 submitQuote = async (event) => {
-    const quoteForm = document.getElementById("quoteForm");
     event.preventDefault()
 
+    //gave up on using a form, decided to manually fill in json data.
+    const quoteFormQuote = document.getElementById("quoteFormQuote")
+    const quoteFormAuthor = document.getElementById("quoteFormAuthor")
+    data = {
+        "quote" : quoteFormQuote.value,
+        "author" : quoteFormAuthor.value
+    }
+
+    //make a post request to the database
     const response = await fetch('/quotes', {
         method: 'POST',
-        body: new FormData(quoteForm)
-    });
-    const result = await response.json();
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data)
+    })
+
+    if (response.status == 201){
+        quoteFormQuote.value = ""
+        quoteFormAuthor.value = ""
+        alert("Your quote has been submitted. Thank you!")
+    }
+    else{
+        alert("There was an error in submitting your quote, please try again! Error:", response.json().error)
+    }
+}
+
+/**
+ * Submitting new quote to the database
+ * Used in window.onload
+ */
+
+submitImage = async (event) => {
+    event.preventDefault()
+
+    //gave up on using a form, decided to manually fill in multiform data.
+    const imageFormPhotographer= document.getElementById("imageFormPhotographer")
+    const imageFormNuggetPhoto = document.getElementById("imageFormNuggetPhoto")
+    const imageFormDescriptionAlt = document.getElementById("imageFormDescriptionAlt")
+
+    //convert image to imageBlob: https://javascript.info/formdata
+
+    //create form data
+    const imageFormData = new FormData();
+    imageFormData.append("photographer", imageFormPhotographer.value);
+    imageFormData.append("upload", imageFormNuggetPhoto.files[0]);
+    imageFormData.append("descriptionAlt", imageFormDescriptionAlt.value)
+    
+
+    //make a post request to the database
+    const response = await fetch('/images', {
+        method: 'POST',
+        /**headers: {
+            'Content-Type': 'multipart/form-data'
+            //'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },*/
+        body: imageFormData
+    })
+    console.log(response)
+    let result = await response.json();
     console.log(result)
+    if (result.error){
+        alert("There was an error in submitting your image! Please check your submission and try again. ")
+        console.error(result.error)
+    }
+    else{
+        imageFormPhotographer.value = ""
+        imageFormNuggetPhoto.value = null
+        imageFormDescriptionAlt.value = ""
+        alert("Your image has been submitted! Thank you!")
+    }
 }

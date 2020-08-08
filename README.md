@@ -17,13 +17,11 @@ whydaniel july + august 2020
 
 ## REMAINING TASK LIST
 - Load random image from the database into the app
-- Configure quote form to post to database - do data validation
 - Configure image form to post to database - do data validation
-- Deploy website on heroku
 - Create user model and middleware auth to add to everything else
 - Create admin page with functions to modify database
 - Download bootstrap and online scripts locally
-- Deploy website again
+- Deploy website on heroku
 - Add randomly bouncing tennis balls
 - Add randomly moving squirrels
 - Deploy website again

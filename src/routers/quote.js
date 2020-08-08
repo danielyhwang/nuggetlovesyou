@@ -17,10 +17,7 @@ const Quote = require("../models/Quote")
  * Quote is automatically unverified upon entry.
  */
 router.post("/quotes", async (req, res) => {
-    console.log(req.body);
-    res.status(200).send("recieved your request!");
-    /** 
-    const quote = new Quote(req.body.quote)
+    const quote = new Quote(req.body)
     quote.verified = false;
     try {
         await quote.save()
@@ -29,7 +26,6 @@ router.post("/quotes", async (req, res) => {
     catch (e) {
         res.status(400).send(e)
     }
-    */
 })
 
 /**
