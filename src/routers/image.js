@@ -55,14 +55,10 @@ router.post("/images", nuggetPhoto.single("upload"), async (req, res) => {
  * Read an random image from the database.
  */
 router.get("/randomImage", async (req, res) => {
-    const _id = req.params.id
     try {
-        //{ $match: { verified: false} }
-        const randomImages = await Image.aggregate([{$sample: { size: 1 } }]) //https://stackoverflow.com/questions/2824157/random-record-from-mongodb
+        const randomImages = await Image.aggregate([{ $match: { verified: true} }, {$sample: { size: 1 } }]) //https://stackoverflow.com/questions/2824157/random-record-from-mongodb
         const firstRandomImage = randomImages[0]
         res.send(firstRandomImage)
-        //res.set("Content-Type", "image/png") //make sure we send back data
-        //res.status(200).send(firstRandomImage.imageData)
     }
     catch (e) {
         res.status(500).send(e)

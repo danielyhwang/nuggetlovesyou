@@ -16,8 +16,6 @@ whydaniel july + august 2020
 - nodemon (run script over and over again)
 
 ## REMAINING TASK LIST
-- Load random image from the database into the app
-- Configure image form to post to database - do data validation
 - Create user model and middleware auth to add to everything else
 - Create admin page with functions to modify database
 - Download bootstrap and online scripts locally
