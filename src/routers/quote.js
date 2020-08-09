@@ -11,6 +11,7 @@
 const express = require("express")
 const router = new express.Router()
 const Quote = require("../models/Quote")
+const auth = require("../middleware/auth")
 
 /**
  * Create an Quote (with quote + author fields) given valid data from a request and save it to the database.
@@ -43,9 +44,28 @@ router.get("/randomQuote", async (req, res) => {
 })
 
 /**
+ * Read an Quote by ID. Admin permissions required.
+ */
+router.get("/quotes/:id", auth, async (req, res) => {
+    const _id = req.params.id
+    try {
+        const image = await Image.findOne({ _id })
+        if (!image) {
+            return res.status(404).send()
+        }
+        res.send(image)
+        //res.set("Content-Type", "image/png") //make sure we send back data
+        //res.send(image.imageData)
+    }
+    catch (e) {
+        res.status(500).send(e)
+    }
+})
+
+/**
  * Update quote in the database by id. Admin permissions required.
  */
-router.patch("/quotes/:id", async (req, res) => {
+router.patch("/quotes/:id", auth, async (req, res) => {
     //check if the fields in the request body match those of the quote model. send an error if not.
     const currentFields = Object.keys(req.body)
     const validUpdates = ["quote", "author", "verified"]
@@ -81,7 +101,7 @@ router.patch("/quotes/:id", async (req, res) => {
 /**
  * Delete image in the database by id. Admin permissions required.
  */
-router.delete("/quotes/:id", async (req, res) => {
+router.delete("/quotes/:id", auth, async (req, res) => {
     const _id = req.params.id
     try {
         const quote = await Quote.findByIdAndDelete(_id)

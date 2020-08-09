@@ -13,6 +13,7 @@ const router = new express.Router()
 const Image = require("../models/Image")
 const multer = require("multer")
 const sharp = require("sharp")
+const auth = require("../middleware/auth") 
 
 /**
  * Multer middleware - will allow us to do image verification
@@ -68,7 +69,7 @@ router.get("/randomImage", async (req, res) => {
 /**
  * Read an Image by ID.
  */
-router.get("/images/:id", async (req, res) => {
+router.get("/images/:id", auth, async (req, res) => {
     const _id = req.params.id
     try {
         const image = await Image.findOne({ _id })
@@ -87,7 +88,7 @@ router.get("/images/:id", async (req, res) => {
 /**
  * Update image in the database by id.
  */
-router.patch("/images/:id", async (req, res) => {
+router.patch("/images/:id", auth, async (req, res) => {
     //check if the fields in the request body match those of the image model. send an error if not.
     const currentFields = Object.keys(req.body)
     const validUpdates = ["photographer", "descriptionAlt", "imageData"]
@@ -123,7 +124,7 @@ router.patch("/images/:id", async (req, res) => {
 /**
  * Delete image in the database by id.
  */
-router.delete("/images/:id", async (req, res) => {
+router.delete("/images/:id", auth, async (req, res) => {
     const _id = req.params.id
     try {
         const image = await Image.findOneAndDelete({ _id })

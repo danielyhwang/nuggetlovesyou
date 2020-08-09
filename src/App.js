@@ -55,9 +55,11 @@ app.use(express.static(publicDirectoryPath))
  */
 const imageRouter = require("./routers/image")
 const quoteRouter = require("./routers/quote")
+const adminRouter = require("./routers/admin")
 app.use(express.json())
 app.use(imageRouter)
 app.use(quoteRouter)
+app.use(adminRouter)
 
 //This allows us to extract the data contained in POST requests using express.urlencoded middleware
 app.use(express.urlencoded({extended: true}))
@@ -67,6 +69,13 @@ app.use(express.urlencoded({extended: true}))
  */
 app.get("/", (req, res) => {
     res.render("main")
+})
+
+/**
+ * Admin page route. See admin.hbs
+ */
+app.get("/admin", (req, res) => {
+    res.render("admin")
 })
 
 /**

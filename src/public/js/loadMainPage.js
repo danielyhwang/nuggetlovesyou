@@ -57,7 +57,7 @@ const photographer = document.getElementById("photographer")
 fetch("/randomImage").then(async (response) => {
     const data = await response.json();
     if (Object.keys(data).length) {
-        nuggetPhoto.src = 'data:image/jpeg;base64,' + data.imageData.toString("base-64")
+        nuggetPhoto.src = 'data:image/png;base64,' + data.imageData.toString("base-64")
         nuggetPhoto.alt = data.descriptionAlt;
         photographer.value = "Photo by " + data.photographer;
     }
