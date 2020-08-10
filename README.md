@@ -16,7 +16,6 @@ whydaniel july + august 2020
 - nodemon (run script over and over again)
 
 ## REMAINING TASK LIST
-- Create user model and middleware auth to add to everything else
 - Create admin page with functions to modify database
 - Download bootstrap and online scripts locally
 - Deploy website on heroku
@@ -33,3 +32,5 @@ whydaniel july + august 2020
 - [Full screen background styling](https://mdbootstrap.com/snippets/jquery/mdbootstrap/102236)
 - [Chris Smith's fantastic CSS styling that I used to create that border frame](https://codepen.io/chris22smith/pen/PbBwjp)
 - [Yellow color palette](https://graf1x.com/shades-of-yellow-color-palette-chart/)
+- [Reading in form data](https://javascript.info/formdata)
+- [Reference for login page](https://bootsnipp.com/snippets/dldxB)

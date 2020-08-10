@@ -46,10 +46,10 @@ router.post("/images", nuggetPhoto.single("upload"), async (req, res) => {
     }
     catch (e) {
         console.log(e)
-        res.status(500).send({error: e})
+        res.status(500).send({"error" : "There was an error in saving your image. Please try again."})
     }
 }, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
+    res.status(400).send({ "error" : error.message})
 }) //end function handles errors
 
 /**

@@ -34,7 +34,7 @@ router.post("/admin/login", async (req, res) => {
     }
     catch (e){
         console.log(e)
-        res.status(400).send()
+        res.status(400).send({"error": "Unable to login. Please try again."})
     }
 })
 
@@ -45,10 +45,10 @@ router.post("/admin/logout", auth, async (req, res) => {
             return token.token !== req.token
         })
         await req.admin.save()
-        res.status(200).send()
+        res.status(200).send({"message": "Successfully logged out."})
     }
     catch (e){
-        res.status(500).send()
+        res.status(500).send({"error": "Couldn't log out."})
     }
 })
 
@@ -57,10 +57,10 @@ router.post("/admin/logoutAll", auth, async (req, res) => {
     try {
         req.admin.tokens = []
         await req.admin.save()
-        res.send()
+        res.send({"message": "Successfully logged out of all sessions."})
     }
     catch (e){
-        res.status(500).send()
+        res.status(500).send({"error": "Couldn't log out."})
     }
 })
 
@@ -84,13 +84,13 @@ router.patch("/admin/me", auth, async (req, res) => {
         await req.admin.save() //save changes
 
         if (!req.admin){
-            return res.status(404).send()
+            return res.status(404).send({"error" : "User not found."})
         } //return 404 in case if user cannot be found
 
         res.send(req.admin) //send back updated user
 
     } catch (e) {
-        res.status(400).send(e) //validation error
+        res.status(400).send(e) //send back validation error
     }
 })
 

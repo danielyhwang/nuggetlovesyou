@@ -74,8 +74,8 @@ app.get("/", (req, res) => {
 /**
  * Admin page route. See admin.hbs
  */
-app.get("/admin", (req, res) => {
-    res.render("admin")
+app.get("/login", (req, res) => {
+    res.render("login")
 })
 
 /**

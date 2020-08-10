@@ -157,8 +157,7 @@ submitImage = async (event) => {
     let result = await response.json();
     console.log(result)
     if (result.error) {
-        alert("There was an error in submitting your image! Please check your submission and try again. ")
-        console.error(result.error)
+        alert(result.error)
     }
     else {
         imageFormPhotographer.value = ""
