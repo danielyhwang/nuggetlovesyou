@@ -1,5 +1,7 @@
 const express = require("express")
 const Admin = require("../models/Admin")
+const Quote = require("../models/Quote")
+const Image = require("../models/Image")
 const auth = require("../middleware/auth")
 const router = new express.Router()
 
@@ -10,9 +12,9 @@ router.get("/admin/me", auth, async (req, res) => {
     res.send(req.admin)
 })
 
-//create admin. TEMPORARILY AVAILABLE FOR ANYTHING
-//TODO: resolve this so only admin can create other admin.
-router.post("/admin", async (req, res) => {
+//create admin. 
+//TODO: REQUIRE AUTHENTICATION ONCE FIRST USER HAS BEEN CREATED.
+router.post("/admin/newAdmin", async (req, res) => {
     const admin = new Admin(req.body)
     try {
         await admin.save();
@@ -25,21 +27,61 @@ router.post("/admin", async (req, res) => {
     }
 })
 
+router.get('/admin', auth, async (req, res) => {
+    if (req.admin){
+        return res.render("admin")
+    }
+    else{
+        return res.redirect(400, "/login")
+    }
+})
+
 //logins user using body, creates auth token for them to use
-router.post("/admin/login", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
         const admin = await Admin.findByCredentials(req.body.email, req.body.password)
         const token = await admin.generateAuthToken()
-        res.send({admin, token}) //admin will automatically strip sensitive info thanks to toJSON
+        //res.set("Authentication", `Bearer ${token}`)
+        // Setting the auth token in cookies
+        res.cookie('AuthToken', token);
+        res.redirect("/admin") //render the admin page with token loaded in header
     }
     catch (e){
-        console.log(e)
-        res.status(400).send({"error": "Unable to login. Please try again."})
+        res.redirect(400, "/login")
+    }
+})
+
+router.get("/admin/getQuoteEntries", auth, async (req, res) => {
+    res.status(400).send({error: "nAH FAM"})
+    /**
+    const limit = req.query.limit
+    const start = req.query.start
+    try {
+        const results = await Quote.find() //.skip(start) //.limit(limit)
+        res.status(201).send({results})
+    }
+    catch (error){
+        console.log(error)
+        res.status(400).send({error})
+    }
+    */
+})
+
+router.get("/admin/getImageEntries", auth, async (req, res) => {
+    const limit = req.query.limit
+    const start = req.query.start
+    try {
+        const results = await Image.find() //.skip(start) //.limit(limit)
+        res.status(201).send({results})
+    }
+    catch (error){
+        console.log(error)
+        res.status(400).send({error})
     }
 })
 
 //logouts admin, removes currently used auth token
-router.post("/admin/logout", auth, async (req, res) => {
+router.post("/logout", auth, async (req, res) => {
     try {
         req.admin.tokens = req.admin.tokens.filter((token) => {
             return token.token !== req.token
@@ -53,7 +95,7 @@ router.post("/admin/logout", auth, async (req, res) => {
 })
 
 //logouts admin and erases all tokens on current admin
-router.post("/admin/logoutAll", auth, async (req, res) => {
+router.post("/logoutAll", auth, async (req, res) => {
     try {
         req.admin.tokens = []
         await req.admin.save()

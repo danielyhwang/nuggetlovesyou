@@ -14,13 +14,75 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
   <!-- Our Custom CSS -->
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/styleAdmin.css" />
 
   <title>Admin - Nugget ♥s You</title>
 </head>
 
 <body>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="#imageAdmin" class="nav-link active" data-toggle="tab">Image</a>
+    </li>
+    <li class="nav-item">
+      <a href="#quoteAdmin" class="nav-link" data-toggle="tab">Quote</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="imageAdmin">
+      <table class="table" id = "imageTable">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Author</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Description</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>whasd</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="quoteAdmin">
+      <table class="table" id = "quoteTable">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Quote</th>
+            <th scope="col">Author</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+
+  <!-- Our Custom JS -->
+  <!-- <script src="../../../../node_modules/howler/src/howler.core.js"> </script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.8/howler.js"></script>
+  <script src="../../js/loadAdminPage.js"></script>
 </body>
 
 </html>

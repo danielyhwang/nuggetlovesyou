@@ -34,3 +34,4 @@ whydaniel july + august 2020
 - [Yellow color palette](https://graf1x.com/shades-of-yellow-color-palette-chart/)
 - [Reading in form data](https://javascript.info/formdata)
 - [Reference for login page](https://bootsnipp.com/snippets/dldxB)
+- [Configuring proper auth](https://stackabuse.com/handling-authentication-in-express-js/)

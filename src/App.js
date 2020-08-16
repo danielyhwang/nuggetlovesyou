@@ -49,6 +49,11 @@ hbs.registerPartials(partialsPath)
 //allows us to use static files (css/img/js) in the public directory.
 app.use(express.static(publicDirectoryPath))
 
+// To parse cookies from the HTTP Request
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+
 /**
  * Connect routers (image, quote) to app (see /routers)
  * also configure the app to take in JSON data only
@@ -57,13 +62,11 @@ const imageRouter = require("./routers/image")
 const quoteRouter = require("./routers/quote")
 const adminRouter = require("./routers/admin")
 app.use(express.json())
+//This allows us to extract the data contained in POST requests using express.urlencoded middleware
+app.use(express.urlencoded({extended: true}))
 app.use(imageRouter)
 app.use(quoteRouter)
 app.use(adminRouter)
-
-//This allows us to extract the data contained in POST requests using express.urlencoded middleware
-app.use(express.urlencoded({extended: true}))
-
 /**
  * Default route - what the user will see upon arrival. See main.hbs
  */
@@ -72,7 +75,7 @@ app.get("/", (req, res) => {
 })
 
 /**
- * Admin page route. See admin.hbs
+ * Login/admin page route. See login.hbs and admin.hbs pages.
  */
 app.get("/login", (req, res) => {
     res.render("login")

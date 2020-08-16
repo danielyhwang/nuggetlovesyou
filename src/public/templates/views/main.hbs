@@ -1,255 +1,292 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Font Awesome CSS -->
-    <link rel = "stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="./css/styleMain.css" />
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <title>Nugget ♥s You</title>
-  </head>
-  <body>
-    <div class = "container-fluid d-flex flex-column" id = "background">
-      <div class = "d-flex flex-row justify-content-between">
-        <!-- SHARE BUTTON-->
-        <button type="button" class="btn btn-primary rounded-circle" data-toggle = "modal" data-target = "#shareModal">
-          <i class = "fa fa-share topIcon"></i>
-        </button>
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="./css/styleMain.css" />
 
-        <!-- TITLE-->
-        <h1>Nugget Loves You</h1>
+  <title>Nugget ♥s You</title>
+</head>
 
-        <!-- INFO MODAL-->
-        <button type="button" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#infoModal">
-          <i class = "fa fa-info-circle topIcon"></i>
-        </button>
-      </div>
-      <!-- MAIN CONTENT -->
-      <div class = "flex-fill d-flex flex-column align-items-center justify-content-center">
-        <div class="text-center">
-          <!-- IMAGE -->
-          <div id = "imageFrame">
-            <div class = "d-inline-block position-relative">
-              <img id = "nuggetPhoto" src = "../../img/roughlySquareNugget.png" style = "height: 300px;" alt = "Test!"/>
-              <div id = "photographer" class = "lowerRightText mb-0">
-                Photo by Keith Upchurch
-              </div>
+<body>
+  <div class="container-fluid d-flex flex-column" id="background">
+    <div class="d-flex flex-row justify-content-between">
+      <!-- SHARE BUTTON-->
+      <button type="button" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#shareModal">
+        <i class="fa fa-share topIcon"></i>
+      </button>
+
+      <!-- TITLE-->
+      <h1>Nugget Loves You</h1>
+
+      <!-- INFO MODAL-->
+      <button type="button" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#infoModal">
+        <i class="fa fa-info-circle topIcon"></i>
+      </button>
+    </div>
+    <!-- MAIN CONTENT -->
+    <div class="flex-fill d-flex flex-column align-items-center justify-content-center">
+      <div class="text-center">
+        <!-- IMAGE -->
+        <div id="imageFrame">
+          <div class="d-inline-block position-relative">
+            <img id="nuggetPhoto" src="../../img/roughlySquareNugget.png" style="height: 300px;" alt="Test!" />
+            <div id="photographer" class="lowerRightText mb-0">
+              Photo by Keith Upchurch
             </div>
-          </div>
-          <!-- QUOTE -->
-          <div id = "displayedQuote">
-            The only thing we have to fear is fear itself. - FDR
           </div>
         </div>
-      </div>
-      
-      <div class = "d-flex flex-row justify-content-between">
-        <!-- CONTRIBUTE CONTENT (a text button redirecting users to google form or custom form.)-->
-        <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target = "#formModal">
-          Contribute Content!
-        </button>
-        <!-- MUSIC CONTENT (a text button displaying current song. toggling it strikethroughs the text and stops it. Only one song plays on loop because I can't host a radio server.) -->
-        <button type="button" class="btn btn-primary m-1 pausedText" id = "musicButton"><i class = "fa fa-music musicIcon"></i>: Quirky Dog - Kevin MacLeod</button>
-      </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-    <!-- Our Custom JS -->
-    <!-- <script src="../../../../node_modules/howler/src/howler.core.js"> </script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.8/howler.js"></script>
-    <script src = "../../js/loadMainPage.js"></script>
-
-    <!-- SHARE MODAL -->
-    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title" id="shareModalLabel">Share</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="d-flex flex-row justify-content-between" aria-label="Share Links">
-              <a href = "https://www.facebook.com/sharer/sharer.php?u=https://www.nuggetlovesyou.herokuapp.com" 
-                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
-                <i class = "fa fa-facebook" style = "color: #3B5998"></i>
-              </a>
-              <a href = "https://twitter.com/home?status=https://www.nuggetlovesyou.herokuapp.com" 
-                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
-                <i class = "fa fa-twitter" style = "color: #1DA1F2"></i>
-              </a>
-              <a href = "https://pinterest.com/pin/create/button/?url=https://www.nuggetlovesyou.herokuapp.com&media=&description="
-                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
-                <i class = "fa fa-pinterest" style = "color: #BD081C"></i>
-              </a>
-              <a href = "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nuggetlovesyou.herokuapp.com"
-                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
-                  <i class = "fa fa-linkedin" style = "color: #0E76A8"></i>
-              </a>
-              <a href = "mailto:info@example.com?&subject=&body=https://www.nuggetlovesyou.herokuapp.com" 
-                role="button" class="btn btn-lg btn-outline-primary rounded-circle">
-                  <i class = "fa fa-envelope" style = "color: #808080"></i>
-              </a>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <h5 class="modal-title mr-auto">Link to the website!</h5>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" id = "linkURL" value= "https://nuggetlovesyou.herokuapp.com" aria-label="linkURL" aria-describedby="linkURL" disabled />
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type = "button" id="copy-addon" onclick = "copyLinkToClipboard()"><i class = "fa fa-copy"></i></span>
-              </div>
-            </div>
-            
-          </div>
+        <!-- QUOTE -->
+        <div id="displayedQuote">
+          The only thing we have to fear is fear itself. - FDR
         </div>
       </div>
     </div>
 
-    <!-- INFO MODAL -->
-    <div class="modal hide fade in" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title" id="infoModalLabel">Nugget Loves You</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+    <div class="d-flex flex-row justify-content-between">
+      <!-- CONTRIBUTE CONTENT (a text button redirecting users to google form or custom form.)-->
+      <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#formModal">
+        Contribute Content!
+      </button>
+      <!-- MUSIC CONTENT (a text button displaying current song. toggling it strikethroughs the text and stops it. Only one song plays on loop because I can't host a radio server.) -->
+      <button type="button" class="btn btn-primary m-1 pausedText" id="musicButton"><i
+          class="fa fa-music musicIcon"></i>: Quirky Dog - Kevin MacLeod</button>
+    </div>
+  </div>
+
+  <!-- SHARE MODAL -->
+  <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="shareModalLabel">Share</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-row justify-content-between" aria-label="Share Links">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.nuggetlovesyou.herokuapp.com"
+              role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+              <i class="fa fa-facebook" style="color: #3B5998"></i>
+            </a>
+            <a href="https://twitter.com/home?status=https://www.nuggetlovesyou.herokuapp.com" role="button"
+              class="btn btn-lg btn-outline-primary rounded-circle">
+              <i class="fa fa-twitter" style="color: #1DA1F2"></i>
+            </a>
+            <a href="https://pinterest.com/pin/create/button/?url=https://www.nuggetlovesyou.herokuapp.com&media=&description="
+              role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+              <i class="fa fa-pinterest" style="color: #BD081C"></i>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.nuggetlovesyou.herokuapp.com"
+              role="button" class="btn btn-lg btn-outline-primary rounded-circle">
+              <i class="fa fa-linkedin" style="color: #0E76A8"></i>
+            </a>
+            <a href="mailto:info@example.com?&subject=&body=https://www.nuggetlovesyou.herokuapp.com" role="button"
+              class="btn btn-lg btn-outline-primary rounded-circle">
+              <i class="fa fa-envelope" style="color: #808080"></i>
+            </a>
           </div>
-          <div class="modal-body">
-            <h4>A good website for an even greater dog.</h4>
-            <p>This website was created over the span of roughly two months (July - August 2020), inspired by the monthly pictures of Nugget sent to the Duke population's emails by her caretaker Keith Upchurch. 
-            Those emails would make any day or study session feel slightly better, and the only real regret I have as a Duke student is not having met her earlier. She cured my fear of dogs. And whenever
-            I had something on my mind, seeing Nugget wag her tail near the West Union entrance would bring some joy to my day. And I imagine the entire Duke community has become a better place thanks to her.
+        </div>
+        <div class="modal-footer">
+          <h5 class="modal-title mr-auto">Link to the website!</h5>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" id="linkURL" value="https://nuggetlovesyou.herokuapp.com"
+              aria-label="linkURL" aria-describedby="linkURL" disabled />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="copy-addon" onclick="copyLinkToClipboard()"><i
+                  class="fa fa-copy"></i></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO MODAL -->
+  <div class="modal hide fade in" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="infoModalLabel">Nugget Loves You</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4>A good website for an even greater dog.</h4>
+          <p>This website was created over the span of roughly two months (July - August 2020), inspired by the monthly
+            pictures of Nugget sent to the Duke population's emails by her caretaker Keith Upchurch.
+            Those emails would make any day or study session feel slightly better, and the only real regret I have as a
+            Duke student is not having met her earlier. She cured my fear of dogs. And whenever
+            I had something on my mind, seeing Nugget wag her tail near the West Union entrance would bring some joy to
+            my day. And I imagine the entire Duke community has become a better place thanks to her.
             Amidst all the chaos that occurs on our campus, there is Nugget.</p>
-            <p>This website is intended to bring a little bit of Nugget's radiant happiness into your life. Whether you can't meet Nugget amidst the COVID pandemic, you need a little bit of motivation,
+          <p>This website is intended to bring a little bit of Nugget's radiant happiness into your life. Whether you
+            can't meet Nugget amidst the COVID pandemic, you need a little bit of motivation,
             or want to make someone's day, I hope this website helps. Here's to you, Nugget. We love you.</p>
-            <a href = "https://github.com/whydaniel/nuggetlovesyou">Repo behind this project (with dev details) is available here.</a>
-            <br>
-            <br>
-            
-            <h4>About Keith and Nugget</h4>
-              <p><b>"When you're struggling through finals, remember the real reason you're here"</b> - Duke Memes for Gothic Teens, before it became toxic</p>
+          <a href="https://github.com/whydaniel/nuggetlovesyou">Repo behind this project (with dev details) is available
+            here.</a>
+          <br>
+          <br>
+
+          <h4>About Keith and Nugget</h4>
+          <p><b>"When you're struggling through finals, remember the real reason you're here"</b> - Duke Memes for
+            Gothic Teens, before it became toxic</p>
+          <ul>
+            <li>A beautiful <b>golden retriever</b>.</li>
+            <li>"With silky fur, lolling tongue, and [a] gregarious personality." - Chris Kuo</li>
+            <li>Described as:
               <ul>
-                <li>A beautiful <b>golden retriever</b>.</li>
-                <li>"With silky fur, lolling tongue, and [a] gregarious personality." - Chris Kuo</li>
-                <li>Described as:
-                  <ul>
-                    <li>"best symbol of Duke's unity and togetherness"</li>
-                    <li>"the Queen of Duke"</li>
-                    <li>"a celebrity/rockstar"</li>
-                  </ul>
-                <li>Born in 2010, Keith later picked her up at 10 weeks old</li>
-                <li>Loves water, squirrels, apples, and people.</li> 
-                <li>Her pelt smells like buttered toast.</li>
-                <li>Never barks nor freezes.</li> 
-                <li>Will handle any amount of petting you can give her.</li> 
-                <li>Once swallowed 31 snowballs on a (rare) snow day.</li>
-                <li>Amidst COVID pandemic, Keith and Nugget are making two daily walks to Duke.</li>
-                <li>The duo has gotten to know 2,000 students as of 2018.</li>
+                <li>"best symbol of Duke's unity and togetherness"</li>
+                <li>"the Queen of Duke"</li>
+                <li>"a celebrity/rockstar"</li>
               </ul>
-              <p>This slug was created using personal knowledge and info 
-                <a href = "https://www.dukechronicle.com/article/2019/11/duke-nugget-dog-rockstar-keith-upchurch">from</a>
-                <a href = "https://www.dukechronicle.com/article/2020/03/duke-keith-nugget-pandemic-walking-durham-duke-students-dog"> these</a> 
-                <a href = "https://medium.com/dukestudents/advice-from-the-one-and-only-3d1ec4987884"> articles.</a>
-              </p>
+            <li>Born in 2010, Keith later picked her up at 10 weeks old</li>
+            <li>Loves water, squirrels, apples, and people.</li>
+            <li>Her pelt smells like buttered toast.</li>
+            <li>Never barks nor freezes.</li>
+            <li>Will handle any amount of petting you can give her.</li>
+            <li>Once swallowed 31 snowballs on a (rare) snow day.</li>
+            <li>Amidst COVID pandemic, Keith and Nugget are making two daily walks to Duke.</li>
+            <li>The duo has gotten to know 2,000 students as of 2018.</li>
+          </ul>
+          <p>This slug was created using personal knowledge and info
+            <a href="https://www.dukechronicle.com/article/2019/11/duke-nugget-dog-rockstar-keith-upchurch">from</a>
+            <a
+              href="https://www.dukechronicle.com/article/2020/03/duke-keith-nugget-pandemic-walking-durham-duke-students-dog">
+              these</a>
+            <a href="https://medium.com/dukestudents/advice-from-the-one-and-only-3d1ec4987884"> articles.</a>
+          </p>
 
-            <h4>Special Thanks</h4>
-            <ul>
-              <li>Nugget and Keith</li>
-              <li><a href = "https://woto.app">My friends over at WoTo</a> for forcing me to learn JavaScript. I still haven't recovered.</li>
-              <li>My friends who provided moral support.</li>
-              <li>All external sources of music + nugget photos (credited on site)</li>
-              <li>Beta Testers
-                <ul>
-                  <li>TBD</li>
-                </ul>
-              </li>
-              <li><a href = "https://www.udemy.com/course/the-complete-nodejs-developer-course-2/">Andrew Mead's excellent Udemy course that I pretty much used to create this website.</a></li>
-            </ul>
+          <h4>Special Thanks</h4>
+          <ul>
+            <li>Nugget and Keith</li>
+            <li><a href="https://incompetech.com/">Kevin MacLeod</a> for providing royalty free music.</li>
+            <li><a href="https://woto.app">My friends over at WoTo</a> for forcing me to learn JavaScript. I still
+              haven't recovered.</li>
+            <li>My friends who provided moral support.</li>
+            <li>All external sources of nugget photos (credited on site)</li>
+            <li>Beta Testers
+              <ul>
+                <li>TBD</li>
+              </ul>
+            </li>
+            <li><a href="https://www.udemy.com/course/the-complete-nodejs-developer-course-2/">Andrew Mead's excellent
+                Udemy course that I pretty much used to create this website.</a></li>
+          </ul>
 
-            <p>Created by <a href = "https://github.com/whydaniel">whydaniel</a>. All inquiries to why dot daniel dot hwang at gmail dot com (no spaces between dots).</p>
-          </div>
+          <p>Created by <a href="https://github.com/whydaniel">whydaniel</a>. All inquiries to why dot daniel dot hwang
+            at gmail dot com (no spaces between dots).</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- CONTRIBUTE CONTENT MODAL -->
-    <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title" id="formModalLabel">Contribute Content!</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Thank you for contributing content to Nugget Loves You. Please choose which content you'd like to submit. Please note that upon submission, your entry will need to be verified first before it can be displayed publicly. Have a good day!</p>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#imageFormContainer" role="tab" aria-controls="imageForm" aria-selected="true">Image</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#quoteFormContainer" role="tab" aria-controls="quoteForm" aria-selected="false">Quote</a>
-              </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-              <!-- IMAGE FORM-->
-              <div class="tab-pane fade show active" id="imageFormContainer" role="tabpanel" aria-labelledby="home-tab">
-                <form id = "imageForm" name = "imageForm">
-                  <div class="form-group">
-                    <label for="imageFormPhotographer">Name (gotta give you photo creds! Or type in Anonymous.)</label>
-                    <input type="text" class="form-control" id="imageFormPhotographer" placeholder="???" required maxlength="70">
-                  </div>
-                  <div class="form-group">
-                    <label for="imageFormNuggetPhoto">Upload Nugget Photo Here (limit: 1MB)</label>
-                    <input type="file" class="form-control-file" id="imageFormNuggetPhoto" required accept = "image/*">
-                  </div>
-                  <div class="form-group">
-                    <label for="imageFormDescriptionAlt">Description (short 1-sentence summary of what's in your photo).</label>
-                    <input type="text" class="form-control" id="imageFormDescriptionAlt" placeholder="FDR" required maxlength = "140">
-                  </div>
-                  <div class = "modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                </form>
-              </div>
-              <!-- QUOTE FORM-->
-              <div class="tab-pane fade" id="quoteFormContainer" role="tabpanel" aria-labelledby="profile-tab">
-                <form id = "quoteForm">
-                  <div class="form-group">
-                    <label for="quoteFormQuote" class = "control-label">Quote (maximum 140 characters).</label>
-                    <input id = "quoteFormQuote" name = "quote" type="text" class="form-control" placeholder="The only thing we have to fear is fear itself." required maxlength = "140">
-                  </div>
-                  <div class="form-group">
-                    <label for="quoteFormAuthor" class = "control-label">Author (who said the quote?)</label>
-                    <input id = "quoteFormAuthor" name = "author" type="text" class="form-control" placeholder="FDR" required maxlength = "70">
-                  </div>
-                  <div class = "modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                </form>
-              </div>
+  <!-- CONTRIBUTE CONTENT MODAL -->
+  <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="formModalLabel">Contribute Content!</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Thank you for contributing content to Nugget Loves You. Please choose which content you'd like to submit.
+            Please note that upon submission, your entry will need to be verified first before it can be displayed
+            publicly. Have a good day!</p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#imageFormContainer" role="tab"
+                aria-controls="imageForm" aria-selected="true">Image</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#quoteFormContainer" role="tab"
+                aria-controls="quoteForm" aria-selected="false">Quote</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <!-- IMAGE FORM-->
+            <div class="tab-pane fade show active" id="imageFormContainer" role="tabpanel" aria-labelledby="home-tab">
+              <form id="imageForm" name="imageForm">
+                <div class="form-group">
+                  <label for="imageFormPhotographer">Name (gotta give you photo creds! Or type in Anonymous.)</label>
+                  <input type="text" class="form-control" id="imageFormPhotographer" placeholder="???" required
+                    maxlength="70">
+                </div>
+                <div class="form-group">
+                  <label for="imageFormNuggetPhoto">Upload Nugget Photo Here (limit: 1MB)</label>
+                  <input type="file" class="form-control-file" id="imageFormNuggetPhoto" required accept="image/*">
+                </div>
+                <div class="form-group">
+                  <label for="imageFormDescriptionAlt">Description (short 1-sentence summary of what's in your
+                    photo).</label>
+                  <input type="text" class="form-control" id="imageFormDescriptionAlt" placeholder="FDR" required
+                    maxlength="140">
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- QUOTE FORM-->
+            <div class="tab-pane fade" id="quoteFormContainer" role="tabpanel" aria-labelledby="profile-tab">
+              <form id="quoteForm">
+                <div class="form-group">
+                  <label for="quoteFormQuote" class="control-label">Quote (maximum 140 characters).</label>
+                  <input id="quoteFormQuote" name="quote" type="text" class="form-control"
+                    placeholder="The only thing we have to fear is fear itself." required maxlength="140">
+                </div>
+                <div class="form-group">
+                  <label for="quoteFormAuthor" class="control-label">Author (who said the quote?)</label>
+                  <input id="quoteFormAuthor" name="author" type="text" class="form-control" placeholder="FDR" required
+                    maxlength="70">
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-  </body>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+
+  <!-- Our Custom JS -->
+  <!-- <script src="../../../../node_modules/howler/src/howler.core.js"> </script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.8/howler.js"></script>
+  <script src="../../js/loadMainPage.js"></script>
+
+</body>
+
 </html>
