@@ -52,27 +52,27 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/admin/getQuoteEntries", auth, async (req, res) => {
-    res.status(400).send({error: "nAH FAM"})
-    /**
-    const limit = req.query.limit
-    const start = req.query.start
     try {
-        const results = await Quote.find() //.skip(start) //.limit(limit)
+        const results = await Quote.find({}) //.skip(start) //.limit(limit)
         res.status(201).send({results})
     }
     catch (error){
         console.log(error)
         res.status(400).send({error})
     }
-    */
 })
 
 router.get("/admin/getImageEntries", auth, async (req, res) => {
-    const limit = req.query.limit
-    const start = req.query.start
     try {
-        const results = await Image.find() //.skip(start) //.limit(limit)
-        res.status(201).send({results})
+        const results = await Image.find({})
+        console.log(results)
+        const resultsCopy = results.map(r => r.toObject())
+        console.log(resultsCopy)
+        //test
+        resultsCopy.forEach(result => {
+            result.imageData = result.imageData.toString("base64")
+        })
+        res.status(201).send({results: resultsCopy})
     }
     catch (error){
         console.log(error)
