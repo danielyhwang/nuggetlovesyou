@@ -67,25 +67,6 @@ router.get("/randomImage", async (req, res) => {
 })
 
 /**
- * Read an Image by ID.
- */
-router.get("/images/:id", auth, async (req, res) => {
-    const _id = req.params.id
-    try {
-        const image = await Image.findOne({ _id })
-        if (!image) {
-            return res.status(404).send()
-        }
-        res.send(image)
-        //res.set("Content-Type", "image/png") //make sure we send back data
-        //res.send(image.imageData)
-    }
-    catch (e) {
-        res.status(500).send(e)
-    }
-})
-
-/**
  * Update image in the database by id.
  */
 router.patch("/images/:id", auth, async (req, res) => {

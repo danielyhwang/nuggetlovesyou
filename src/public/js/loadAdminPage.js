@@ -5,8 +5,12 @@
  * create modification functions 
  * create form that changes id.
  */
+
+ /**
+  * Load in entries from the quote database into quote table.
+  */
 const quoteTableBody = document.getElementById("quoteTable").getElementsByTagName("tbody")[0]
-fetch("/admin/getQuoteEntries").then(async (response) => {
+const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${page}&limit=${limit}`).then(async (response) => {
     const body = await response.json()
     if (body.error){
         //make a new row
@@ -33,10 +37,49 @@ fetch("/admin/getQuoteEntries").then(async (response) => {
     }
 })
 
+/**
+ * Takes care of pagination on the quotes page.
+ */
+const quotesPerPage = 2;
+let quoteIndex = 0;
+
+//load in initially
+loadQuoteTable(quoteIndex, quotesPerPage)
+
+const quotePaginationInc = document.getElementById("quotePaginationInc");
+const quotePaginationIndex = document.getElementById("quotePaginationIndex");
+const quotePaginationDec = document.getElementById("quotePaginationDec");
+let numOfQuotes = 0;
+fetch("/admin/getNumOfQuoteEntries").then(response => {
+    return response.json()
+}).then(data => {
+    numOfQuotes = data.count
+})
+
+quotePaginationInc.addEventListener("click", function () {
+    if (quoteIndex < Math.floor(numOfQuotes/quotesPerPage)){
+        quoteIndex += 1;
+        quotePaginationIndex.textContent = `${quoteIndex + 1}`;
+        loadQuoteTable(quoteIndex, quotesPerPage)
+    }
+})
+
+quotePaginationDec.addEventListener("click", function () {
+    if (quoteIndex > 0){
+        quoteIndex -= 1;
+        quotePaginationIndex.textContent = `${quoteIndex + 1}`;
+        loadQuoteTable(quoteIndex, quotesPerPage)
+    }
+})
+
+
+/**
+ * Load in entries from the image database into image table.
+ */
 const imageTableBody = document.getElementById("imageTable").getElementsByTagName("tbody")[0]
 const displayedImage = document.getElementById("displayedImage")
 
-fetch("/admin/getImageEntries").then(async (response) => {
+const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${page}&limit=${limit}`).then(async (response) => {
     const body = await response.json()
     if (body.error){
         //make a new row
@@ -77,5 +120,40 @@ fetch("/admin/getImageEntries").then(async (response) => {
             newCell.appendChild(btn);
             
         }
+    }
+})
+
+/**
+ * Takes care of pagination on the images page.
+ */
+const imagesPerPage = 2;
+let imageIndex = 0;
+
+//load in initially
+loadImageTable(imageIndex, imagesPerPage)
+
+const imagePaginationInc = document.getElementById("imagePaginationInc");
+const imagePaginationIndex = document.getElementById("imagePaginationIndex");
+const imagePaginationDec = document.getElementById("imagePaginationDec");
+let numOfImages = 0;
+fetch("/admin/getNumOfImageEntries").then(response => {
+    return response.json()
+}).then(data => {
+    numOfImages = data.count
+})
+
+imagePaginationInc.addEventListener("click", function () {
+    if (imageIndex < Math.floor(numOfImages/imagesPerPage)){
+        imageIndex += 1;
+        imagePaginationIndex.textContent = `${imageIndex + 1}`;
+        loadImageTable(imageIndex, imagesPerPage)
+    }
+})
+
+imagePaginationDec.addEventListener("click", function () {
+    if (imageIndex > 0){
+        imageIndex -= 1;
+        imagePaginationIndex.textContent = `${imageIndex + 1}`;
+        loadImageTable(imageIndex, imagesPerPage)
     }
 })

@@ -19,9 +19,6 @@ whydaniel july + august 2020
 - Create admin page with functions to modify database
 - Download bootstrap and online scripts locally
 - Deploy website on heroku
-- Add randomly bouncing tennis balls
-- Add randomly moving squirrels
-- Deploy website again
 - Buy custom domain and deploy website there
 - Take in beta suggestions
 - Deploy website again

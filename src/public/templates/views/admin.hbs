@@ -27,6 +27,9 @@
     <li class="nav-item">
       <a href="#quoteAdmin" class="nav-link" data-toggle="tab">Quote</a>
     </li>
+    <li class="nav-item">
+      <a href="#settingsAdmin" class="nav-link" data-toggle="tab">Settings</a>
+    </li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane fade show active" id="imageAdmin">
@@ -43,6 +46,15 @@
         <tbody>
         </tbody>
       </table>
+
+      
+      <nav aria-label="Image pagination">
+        <ul class="pagination" id = "imagePagination">
+          <li class="page-item"><a class="page-link" id = "imagePaginationDec">Previous</a></li>
+          <li class="page-item"><a class="page-link" id = "imagePaginationIndex">1</a></li>
+          <li class="page-item"><a class="page-link" id = "imagePaginationInc">Next</a></li>
+        </ul>
+      </nav>
     </div>
     <div class="tab-pane fade" id="quoteAdmin">
       <table class="table" id = "quoteTable">
@@ -58,25 +70,59 @@
 
         </tbody>
       </table>
+      
+      <nav aria-label="Quote pagination">
+        <ul class="pagination" id = "quotePagination">
+          <li class="page-item"><a class="page-link" id = "quotePaginationDec">Previous</a></li>
+          <li class="page-item"><a class="page-link" id = "quotePaginationIndex">1</a></li>
+          <li class="page-item"><a class="page-link" id = "quotePaginationInc">Next</a></li>
+        </ul>
+      </nav>
+
+    </div>
+    <div class="tab-pane fade" id="settingsAdmin">
+      <form action = "/logoutAll" method = "post">
+        <button type="submit" class="btn btn-danger" name = "logout">Logout</button>
+      </form>
+    </div>
+  </div>
+  
+
+  <!-- Display Image Modal -->
+  <div class="modal fade" id="displayImageModal" tabindex="-1" aria-labelledby="displayImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="displayImageModalLabel">Image</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id = "displayedImage"/>
+        </div>
+      </div>
     </div>
   </div>
 
-<!-- Modal -->
-<div class="modal fade" id="displayImageModal" tabindex="-1" aria-labelledby="displayImageModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="displayImageModalLabel">Image</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <img id = "displayedImage"/>
+  <!-- Patch Admin Modal -->
+  <div class="modal fade" id="patchAdminModal" tabindex="-1" aria-labelledby="patchAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="patchAdminModalLabel">Change Admin</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action = "" method = "patch">
+
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

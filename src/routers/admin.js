@@ -7,26 +7,7 @@ const router = new express.Router()
 
 //admin router. Primarily login functionality. 
 
-//sends back req.admin generated in auth.
-router.get("/admin/me", auth, async (req, res) => {
-    res.send(req.admin)
-})
-
-//create admin. 
-//TODO: REQUIRE AUTHENTICATION ONCE FIRST USER HAS BEEN CREATED.
-router.post("/admin/newAdmin", async (req, res) => {
-    const admin = new Admin(req.body)
-    try {
-        await admin.save();
-        const token = await admin.generateAuthToken()
-        res.status(201).send({admin, token})
-    }
-    catch (e){
-        console.log(e)
-        res.status(400).send(e)
-    }
-})
-
+//Display the admin page if logged in.
 router.get('/admin', auth, async (req, res) => {
     if (req.admin){
         return res.render("admin")
@@ -51,9 +32,31 @@ router.post("/login", async (req, res) => {
     }
 })
 
-router.get("/admin/getQuoteEntries", auth, async (req, res) => {
+//sends back req.admin generated in auth.
+router.get("/admin/me", auth, async (req, res) => {
+    res.send(req.admin)
+})
+
+//create admin. 
+//TODO: REQUIRE AUTHENTICATION ONCE FIRST USER HAS BEEN CREATED.
+router.post("/admin/new", async (req, res) => {
+    const admin = new Admin(req.body)
     try {
-        const results = await Quote.find({}) //.skip(start) //.limit(limit)
+        await admin.save();
+        const token = await admin.generateAuthToken()
+        res.status(201).send({admin, token})
+    }
+    catch (e){
+        console.log(e)
+        res.status(400).send(e)
+    }
+})
+
+router.get("/admin/getQuoteEntries", auth, async (req, res) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    try {
+        const results = await Quote.find({}).sort({createdAt: -1}).skip(page * limit).limit(limit)
         res.status(201).send({results})
     }
     catch (error){
@@ -62,12 +65,23 @@ router.get("/admin/getQuoteEntries", auth, async (req, res) => {
     }
 })
 
-router.get("/admin/getImageEntries", auth, async (req, res) => {
+router.get("/admin/getNumOfQuoteEntries", auth, async (req, res) => {
     try {
-        const results = await Image.find({})
-        console.log(results)
+        const count = await Quote.countDocuments({})
+        res.status(201).send({count})
+    }
+    catch (error){
+        console.log(error)
+        res.status(400).send({error})
+    }
+})
+
+router.get("/admin/getImageEntries", auth, async (req, res) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    try {
+        const results = await Image.find({}).sort({createdAt: -1}).skip(page * limit).limit(limit)
         const resultsCopy = results.map(r => r.toObject())
-        console.log(resultsCopy)
         //test
         resultsCopy.forEach(result => {
             result.imageData = result.imageData.toString("base64")
@@ -80,6 +94,18 @@ router.get("/admin/getImageEntries", auth, async (req, res) => {
     }
 })
 
+router.get("/admin/getNumOfImageEntries", auth, async (req, res) => {
+    try {
+        const count = await Image.countDocuments({})
+        res.status(201).send({count})
+    }
+    catch (error){
+        console.log(error)
+        res.status(400).send({error})
+    }
+})
+
+/**
 //logouts admin, removes currently used auth token
 router.post("/logout", auth, async (req, res) => {
     try {
@@ -93,8 +119,9 @@ router.post("/logout", auth, async (req, res) => {
         res.status(500).send({"error": "Couldn't log out."})
     }
 })
+*/
 
-//logouts admin and erases all tokens on current admin
+//logouts admin and erases all tokens on current admin (currently being used in favor of login)
 router.post("/logoutAll", auth, async (req, res) => {
     try {
         req.admin.tokens = []

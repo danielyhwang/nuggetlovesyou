@@ -44,25 +44,6 @@ router.get("/randomQuote", async (req, res) => {
 })
 
 /**
- * Read an Quote by ID. Admin permissions required.
- */
-router.get("/quotes/:id", auth, async (req, res) => {
-    const _id = req.params.id
-    try {
-        const image = await Image.findOne({ _id })
-        if (!image) {
-            return res.status(404).send()
-        }
-        res.send(image)
-        //res.set("Content-Type", "image/png") //make sure we send back data
-        //res.send(image.imageData)
-    }
-    catch (e) {
-        res.status(500).send(e)
-    }
-})
-
-/**
  * Update quote in the database by id. Admin permissions required.
  */
 router.patch("/quotes/:id", auth, async (req, res) => {
