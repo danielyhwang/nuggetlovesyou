@@ -9,12 +9,14 @@
  /**
   * Load in entries from the quote database into quote table.
   */
-const quoteTableBody = document.getElementById("quoteTable").getElementsByTagName("tbody")[0]
+const quoteTableBody = document.getElementById("quoteTableBody")
 const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${page}&limit=${limit}`).then(async (response) => {
     const body = await response.json()
+    //create new quote body and populate it.
+    const newQuoteTableBody = document.createElement('tbody');
     if (body.error){
         //make a new row
-        var newRow = quoteTableBody.insertRow(0);
+        var newRow = newQuoteTableBody.insertRow(0);
         //insert a new cell
         var newCell = newRow.insertCell(0);
         // Append a text node to the cell
@@ -25,9 +27,9 @@ const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${pag
         var index = 0
         body.results.forEach(quote => {
             //make a new row
-            var newRow = quoteTableBody.insertRow(index);
+            var newRow = newQuoteTableBody.insertRow(index);
             for (const i in [0, 1, 2, 3]){
-                var newArray = [`${index+1}`, quote.quote, quote.author, "TEST"]
+                var newArray = [`${page * limit + index+1}`, quote.quote, quote.author, "TEST"]
                 var newCell = newRow.insertCell(i);
                 var newText = document.createTextNode(newArray[i]);
                 newCell.appendChild(newText)
@@ -35,12 +37,15 @@ const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${pag
             index += 1
         })
     }
+    //remove tbody and add on new body
+    document.querySelector("#quoteTable tbody").remove()
+    document.getElementById("quoteTable").appendChild(newQuoteTableBody)
 })
 
 /**
  * Takes care of pagination on the quotes page.
  */
-const quotesPerPage = 2;
+const quotesPerPage = 25;
 let quoteIndex = 0;
 
 //load in initially
@@ -76,14 +81,16 @@ quotePaginationDec.addEventListener("click", function () {
 /**
  * Load in entries from the image database into image table.
  */
-const imageTableBody = document.getElementById("imageTable").getElementsByTagName("tbody")[0]
+const imageTableBody = document.getElementById("imageTableBody")
 const displayedImage = document.getElementById("displayedImage")
 
 const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${page}&limit=${limit}`).then(async (response) => {
     const body = await response.json()
+    //create new image table body and populate it.
+    const newImageTableBody = document.createElement('tbody');
     if (body.error){
         //make a new row
-        var newRow = imageTableBody.insertRow(0);
+        var newRow = newImageTableBody.insertRow(0);
         //insert a new cell
         var newCell = newRow.insertCell(0);
         // Append a text node to the cell
@@ -96,10 +103,10 @@ const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${pag
             const image = body.results[i]
 
             //make a new row
-            var newRow = imageTableBody.insertRow(i);
+            var newRow = newImageTableBody.insertRow(i);
             
-            for (const j in [0, 1, 3, 4]){
-                var newArray = [`${i+1}`, image.photographer, image.descriptionAlt, "TEST"]
+            for (const j in [0, 1, 3]){
+                var newArray = [`${page * limit + i+1}`, image.photographer, image.descriptionAlt]
                 var newCell = newRow.insertCell(j);
                 var newText = document.createTextNode(newArray[j]);
                 newCell.appendChild(newText)
@@ -118,15 +125,49 @@ const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${pag
             btn.textContent = "View Image";
             btn.onclick = () => {displayedImage.src = 'data:image/png;base64,' + imageData.toString("base64")};
             newCell.appendChild(btn);
+
+            //add in image buttonGroup
+            var newButtonGroup = newRow.insertCell(4)
+            const btnGroup = imageButtonGroup(image._id)
+            newButtonGroup.appendChild(btnGroup)
+
+            /**
+             * 
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary">Left</button>
+                <button type="button" class="btn btn-secondary">Middle</button>
+                <button type="button" class="btn btn-secondary">Right</button>
+            </div>
+             */
             
         }
     }
+    //remove tbody and add on new body
+    document.querySelector("#imageTable tbody").remove()
+    document.getElementById("imageTable").appendChild(newImageTableBody)
 })
+
+//creates imageButtonGroup
+
+const imageButtonGroup = (imageId) => {
+    const test = document.createElement("div")
+    test.innerHTML = `<div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-danger" data-toggle="popover" title="Delete Image" data-content="Are you sure?"><i class="fa fa-trash customIcon"></i></button>
+        <button type="button" class="btn btn-primary"><i class="fa fa-edit customIcon"></i></button>
+        <button type="button" class="btn btn-success"><i class="fa fa-eye customIcon"></i></button>
+
+        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  Popover on top
+</button>
+    </div>`
+    return test
+    //fa-eye-slash and fa-eye
+}
 
 /**
  * Takes care of pagination on the images page.
  */
-const imagesPerPage = 2;
+const imagesPerPage = 10;
 let imageIndex = 0;
 
 //load in initially
