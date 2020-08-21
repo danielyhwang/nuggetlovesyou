@@ -7,6 +7,22 @@
  */
 
  /**
+  * Enable popovers.
+  * https://stackoverflow.com/questions/16990573/how-to-bind-bootstrap-popover-on-dynamic-elements
+  */
+ var popOverSettings = {
+    placement: 'left',
+    container: 'body',
+    html: true,
+    selector: '[data-toggle="popover"]',
+    content: function () {
+        return $('#popover-content').html();
+    }
+}
+
+$('body').popover(popOverSettings);
+
+ /**
   * Load in entries from the quote database into quote table.
   */
 const quoteTableBody = document.getElementById("quoteTableBody")
@@ -28,6 +44,10 @@ const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${pag
         body.results.forEach(quote => {
             //make a new row
             var newRow = newQuoteTableBody.insertRow(index);
+            //if the quote is verified, change the background color to green to indicate addition.
+            if (quote.verified){
+                newRow.classList.add("bg-success")
+            }
             for (const i in [0, 1, 2, 3]){
                 var newArray = [`${page * limit + index+1}`, quote.quote, quote.author, "TEST"]
                 var newCell = newRow.insertCell(i);
@@ -105,6 +125,11 @@ const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${pag
             //make a new row
             var newRow = newImageTableBody.insertRow(i);
             
+            //if the image is verified, change the background color to green to indicate addition.
+            if (image.verified){
+                newRow.classList.add("bg-success")
+            }
+            
             for (const j in [0, 1, 3]){
                 var newArray = [`${page * limit + i+1}`, image.photographer, image.descriptionAlt]
                 var newCell = newRow.insertCell(j);
@@ -128,17 +153,8 @@ const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${pag
 
             //add in image buttonGroup
             var newButtonGroup = newRow.insertCell(4)
-            const btnGroup = imageButtonGroup(image._id)
+            const btnGroup = imageButtonGroup(image._id, image.verified)
             newButtonGroup.appendChild(btnGroup)
-
-            /**
-             * 
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary">Left</button>
-                <button type="button" class="btn btn-secondary">Middle</button>
-                <button type="button" class="btn btn-secondary">Right</button>
-            </div>
-             */
             
         }
     }
@@ -148,20 +164,64 @@ const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${pag
 })
 
 //creates imageButtonGroup
+const imageButtonGroup = (imageId, imageVerified) => {
+    const group = document.createElement("div")
+    group.classList.add("btn-group")
+    group.setAttribute("role", "group")
+    group.setAttribute("aria-label", `Image button group ${imageId.toString()}`)
 
-const imageButtonGroup = (imageId) => {
-    const test = document.createElement("div")
-    test.innerHTML = `<div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-danger" data-toggle="popover" title="Delete Image" data-content="Are you sure?"><i class="fa fa-trash customIcon"></i></button>
-        <button type="button" class="btn btn-primary"><i class="fa fa-edit customIcon"></i></button>
-        <button type="button" class="btn btn-success"><i class="fa fa-eye customIcon"></i></button>
+    //add on delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.classList.add("btn")
+    deleteButton.classList.add("btn-danger")
+    deleteButton.setAttribute("data-toggle", "popover")
+    deleteButton.title = "Delete Image"
+    deleteButton.innerHTML = '<i class="fa fa-trash customIcon"></i>'
 
-        <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-  Popover on top
-</button>
-    </div>`
-    return test
-    //fa-eye-slash and fa-eye
+    group.appendChild(deleteButton)
+
+    //add on modify button
+    const modifyButton = document.createElement("button");
+    modifyButton.type = "button";
+    modifyButton.classList.add("btn")
+    modifyButton.classList.add("btn-primary")
+    modifyButton.title = "Modify Image"
+    modifyButton.innerHTML = '<i class="fa fa-edit customIcon"></i>'
+    //create image modify modal here and configure the form on bootstrap.
+    
+    group.appendChild(modifyButton)
+
+    //add on toggle visibility button
+    const toggleButton = document.createElement("button");
+    toggleButton.type = "button";
+    toggleButton.classList.add("btn")
+    toggleButton.classList.add("btn-info")
+    toggleButton.title = "Toggle Visibility"
+    toggleButton.innerHTML = '<i class="fa fa-eye customIcon"></i>'
+    //the following function will update the visibility of the image.
+    toggleButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        const data = {
+            "verified" : !imageVerified
+        }
+        //make a patch request to change the visibility of the image.
+        const response = await fetch(`/images/${imageId.toString()}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        let result = await response.json();
+        if (response.status >= 400) {
+            console.error(result)
+        }
+        loadImageTable(imageIndex, imagesPerPage)
+    })
+    group.appendChild(toggleButton)
+    
+    return group
 }
 
 /**

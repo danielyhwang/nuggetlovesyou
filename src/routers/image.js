@@ -72,7 +72,7 @@ router.get("/randomImage", async (req, res) => {
 router.patch("/images/:id", auth, async (req, res) => {
     //check if the fields in the request body match those of the image model. send an error if not.
     const currentFields = Object.keys(req.body)
-    const validUpdates = ["photographer", "descriptionAlt", "imageData"]
+    const validUpdates = ["photographer", "descriptionAlt", "imageData", "verified"]
     const isValidOperation = currentFields.every((field) => {
         return validUpdates.includes(field)
     })
@@ -82,9 +82,8 @@ router.patch("/images/:id", auth, async (req, res) => {
 
     //save id into a variable
     const _id = req.params.id
-    const photographer = req.params.photographer
     try {
-        const image = await Image.findOne({ _id, photographer})
+        const image = await Image.findById(_id)
 
         if (!image) {
             return res.status(404).send()

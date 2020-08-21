@@ -153,9 +153,9 @@ submitImage = async (event) => {
         },*/
         body: imageFormData
     })
-    console.log(response)
+    //console.log(response)
     let result = await response.json();
-    console.log(result)
+    //console.log(result)
     if (result.error) {
         alert(result.error)
     }

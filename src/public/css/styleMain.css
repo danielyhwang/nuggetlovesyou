@@ -103,3 +103,7 @@ body, html {
     background-color:#ddc; /* #ddc*/
     text-align:center;
 }
+
+#nuggetPhoto {
+    height: 300px;
+}
