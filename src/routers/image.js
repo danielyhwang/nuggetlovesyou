@@ -34,10 +34,17 @@ const nuggetPhoto = multer({
 })
 
 /**
- * Create an Image (with imageData + descriptionAlt + photographer fields) given valid data from a request and save it to the database.
+ * Create an unique Image (with imageData + descriptionAlt + photographer fields) given valid data from a request and save it to the database.
  */
 router.post("/images", nuggetPhoto.single("upload"), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({ width: undefined, height: 300}).png().toBuffer() //passed data to sharp, asked sharp for data back. can also resize and convert to specific file
+    
+    //test to see if same image has been posted before
+    const duplicate = await Image.find({imageData: buffer})
+    if (duplicate){
+        return res.status(400).send({"error": "This image has been posted before! Please try again with a new photo!"})
+    }
+
     const image = new Image({ ...req.body, imageData: buffer }) //image itself will be stored in imageData
     image.verified = false
     try {
