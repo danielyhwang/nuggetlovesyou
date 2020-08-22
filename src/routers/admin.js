@@ -39,7 +39,7 @@ router.get("/admin/me", auth, async (req, res) => {
 
 //create admin. 
 //TODO: REQUIRE AUTHENTICATION ONCE FIRST USER HAS BEEN CREATED.
-router.post("/admin/new", async (req, res) => {
+router.post("/admin/new", auth, async (req, res) => {
     const admin = new Admin(req.body)
     try {
         await admin.save();
