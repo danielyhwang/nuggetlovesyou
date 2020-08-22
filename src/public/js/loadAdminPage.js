@@ -9,6 +9,7 @@
  /**
   * Enable popovers.
   * https://stackoverflow.com/questions/16990573/how-to-bind-bootstrap-popover-on-dynamic-elements
+  * https://stackoverflow.com/questions/34896106/attach-event-to-dynamic-elements-in-javascript
   */
  var popOverSettings = {
     placement: 'left',
@@ -17,10 +18,49 @@
     selector: '[data-toggle="popover"]',
     content: function () {
         return $('#popover-content').html();
-    }
+    },
+    sanitize: false, //allows you to use forms!
 }
 
 $('body').popover(popOverSettings);
+
+//in the event of submitting a delete form request, we handle it here.
+document.addEventListener('submit', async function(e){
+    if(e.target && e.target.id.startsWith("deleteImage")){
+          e.preventDefault();
+
+          const deleteImageId = e.target.id.replace("deleteImage", "")
+          console.log(deleteImageId)
+
+          //click on the button in order to dismiss the popover.
+          const deleteButtonId = document.getElementById(`deleteButton${deleteImageId}`)
+          deleteButtonId.click();
+
+          
+        //make a delete request to get rid of the image.
+        const response = await fetch(`/images/${deleteImageId}`, {
+            method: "DELETE"
+        })
+        let result = await response.json();
+        if (response.status >= 400) {
+            console.error(result)
+        }
+        loadImageTable(imageIndex, imagesPerPage)
+        if (response.status >= 400) {
+            console.error(result)
+        }
+     }
+ });
+
+ /**
+  * This code will be run upon loading the window, which allows us to deal with our two different forms.
+  */
+ window.onload = function () {
+    const quoteForm = document.getElementById("quoteForm")
+    quoteForm.addEventListener("submit", patchQuote)
+    const imageForm = document.getElementById("imageForm")
+    imageForm.addEventListener("submit", patchImage)
+}
 
  /**
   * Load in entries from the quote database into quote table.
@@ -61,6 +101,41 @@ const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${pag
     document.querySelector("#quoteTable tbody").remove()
     document.getElementById("quoteTable").appendChild(newQuoteTableBody)
 })
+
+/**
+ * This function patches the quote based off form-data.
+ */
+const patchQuote = async (event) => {
+    event.preventDefault();
+
+    //create form data. decided to manually fill in json data.
+    const quoteFormQuote = document.getElementById("quoteFormQuote")
+    const quoteFormAuthor = document.getElementById("quoteFormAuthor")
+    const data = {
+        "photographer": quoteFormQuote.value,
+        "descriptionAlt": quoteFormAuthor.value
+    }
+
+    //get image id
+    const imageFormId = document.getElementById("imageFormId")
+    
+    //make a delete request to get rid of the image.
+    const response = await fetch(`/quotes/${imageFormId.value}`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+
+    let result = await response.json();
+    console.log(result)
+    if (response.status >= 400) {
+        console.error(result)
+    }
+
+    loadQuoteTable(quoteIndex, quotesPerPage)
+}
 
 /**
  * Takes care of pagination on the quotes page.
@@ -153,7 +228,7 @@ const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${pag
 
             //add in image buttonGroup
             var newButtonGroup = newRow.insertCell(4)
-            const btnGroup = imageButtonGroup(image._id, image.verified)
+            const btnGroup = imageButtonGroup(image)
             newButtonGroup.appendChild(btnGroup)
             
         }
@@ -164,21 +239,23 @@ const loadImageTable = (page, limit) => fetch(`/admin/getImageEntries?page=${pag
 })
 
 //creates imageButtonGroup
-const imageButtonGroup = (imageId, imageVerified) => {
+const imageButtonGroup = (image) => {
+
     const group = document.createElement("div")
     group.classList.add("btn-group")
     group.setAttribute("role", "group")
-    group.setAttribute("aria-label", `Image button group ${imageId.toString()}`)
+    group.setAttribute("aria-label", `Image button group ${image._id.toString()}`)
 
     //add on delete button
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
+    deleteButton.id = `deleteButton${image._id.toString()}`
     deleteButton.classList.add("btn")
     deleteButton.classList.add("btn-danger")
     deleteButton.setAttribute("data-toggle", "popover")
     deleteButton.title = "Delete Image"
     deleteButton.innerHTML = '<i class="fa fa-trash customIcon"></i>'
-
+    deleteButton.setAttribute("data-content", `<form id = "deleteImage${image._id.toString()}"><p>Are you sure?</p><input type="submit" id = "submit" value="Yes, delete it!"></form>`)
     group.appendChild(deleteButton)
 
     //add on modify button
@@ -188,7 +265,17 @@ const imageButtonGroup = (imageId, imageVerified) => {
     modifyButton.classList.add("btn-primary")
     modifyButton.title = "Modify Image"
     modifyButton.innerHTML = '<i class="fa fa-edit customIcon"></i>'
-    //create image modify modal here and configure the form on bootstrap.
+    modifyButton.setAttribute("data-toggle", "modal")
+    modifyButton.setAttribute("data-target", "#patchImageAdminModal")
+    //populate the image form with values
+    modifyButton.onclick = async function () {
+        const imageFormId = document.getElementById("imageFormId")
+        const imageFormPhotographer = document.getElementById("imageFormPhotographer")
+        const imageFormDescriptionAlt = document.getElementById("imageFormDescriptionAlt")
+        imageFormId.value = image._id.toString()
+        imageFormPhotographer.value = image.photographer
+        imageFormDescriptionAlt.value = image.descriptionAlt
+    }
     
     group.appendChild(modifyButton)
 
@@ -203,10 +290,10 @@ const imageButtonGroup = (imageId, imageVerified) => {
     toggleButton.addEventListener("click", async (event) => {
         event.preventDefault();
         const data = {
-            "verified" : !imageVerified
+            "verified" : !image.verified
         }
         //make a patch request to change the visibility of the image.
-        const response = await fetch(`/images/${imageId.toString()}`, {
+        const response = await fetch(`/images/${image._id.toString()}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -222,6 +309,41 @@ const imageButtonGroup = (imageId, imageVerified) => {
     group.appendChild(toggleButton)
     
     return group
+}
+
+/**
+ * This function patches the image based off form-data.
+ */
+const patchImage = async (event) => {
+    event.preventDefault();
+
+    //create form data. decided to manually fill in json data.
+    const imageFormPhotographer = document.getElementById("imageFormPhotographer")
+    const imageFormDescriptionAlt = document.getElementById("imageFormDescriptionAlt")
+    const data = {
+        "photographer": imageFormPhotographer.value,
+        "descriptionAlt": imageFormDescriptionAlt.value
+    }
+
+    //get image id
+    const imageFormId = document.getElementById("imageFormId")
+    
+    //make a delete request to get rid of the image.
+    const response = await fetch(`/images/${imageFormId.value}`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+
+    let result = await response.json();
+    console.log(result)
+    if (response.status >= 400) {
+        console.error(result)
+    }
+
+    loadImageTable(imageIndex, imagesPerPage)
 }
 
 /**

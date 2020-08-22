@@ -105,19 +105,66 @@
     </div>
   </div>
 
-  <!-- Patch Admin Modal -->
-  <div class="modal fade" id="patchAdminModal" tabindex="-1" aria-labelledby="patchAdminModalLabel" aria-hidden="true">
+  <!-- Patch Quote Admin Modal -->
+  <div class="modal fade" id="patchImageAdminModal" tabindex="-1" aria-labelledby="patchAdminImageModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="patchAdminModalLabel">Change Admin</h5>
+          <h5 class="modal-title" id="patchAdminImageModalLabel">Change Image - Admin</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form action = "" method = "patch">
+          <form id="imageForm">
+            <div class="form-group">
+              <label for="imageFormId">Image ID</label>
+              <input type="text" class="form-control" id="imageFormId" value="" disabled/>
+            </div>
+            <div class="form-group">
+              <label for="imageFormPhotographer">Name (gotta give you photo creds! Or type in Anonymous.)</label>
+              <input type="text" class="form-control" id="imageFormPhotographer" placeholder="???" required maxlength="70">
+            </div>
+            <div class="form-group">
+              <label for="imageFormDescriptionAlt">Description (short 1-sentence summary of what's in your
+                photo).</label>
+              <input type="text" class="form-control" id="imageFormDescriptionAlt" placeholder="FDR" required maxlength="140">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Patch Image Admin Modal -->
+  <div class="modal fade" id="patchQuoteAdminModal" tabindex="-1" aria-labelledby="patchAdminQuoteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="patchAdminQuoteModalLabel">Change Quote - Admin</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="quoteForm">
+            <div class="form-group">
+              <label for="quoteFormQuote" class="control-label">Quote (maximum 140 characters).</label>
+              <input id="quoteFormQuote" name="quote" type="text" class="form-control"
+                placeholder="The only thing we have to fear is fear itself." required maxlength="140">
+            </div>
+            <div class="form-group">
+              <label for="quoteFormAuthor" class="control-label">Author (who said the quote?)</label>
+              <input id="quoteFormAuthor" name="author" type="text" class="form-control" placeholder="FDR" required
+                maxlength="70">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
           </form>
         </div>
       </div>
