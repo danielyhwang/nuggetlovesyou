@@ -105,7 +105,7 @@
     </div>
   </div>
 
-  <!-- Patch Quote Admin Modal -->
+  <!-- Patch Image Admin Modal -->
   <div class="modal fade" id="patchImageAdminModal" tabindex="-1" aria-labelledby="patchAdminImageModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -139,7 +139,7 @@
     </div>
   </div>
 
-  <!-- Patch Image Admin Modal -->
+  <!-- Patch Quote Admin Modal -->
   <div class="modal fade" id="patchQuoteAdminModal" tabindex="-1" aria-labelledby="patchAdminQuoteModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -152,6 +152,10 @@
         </div>
         <div class="modal-body">
           <form id="quoteForm">
+            <div class="form-group">
+              <label for="quoteFormId">Image ID</label>
+              <input type="text" class="form-control" id="quoteFormId" value="" disabled/>
+            </div>
             <div class="form-group">
               <label for="quoteFormQuote" class="control-label">Quote (maximum 140 characters).</label>
               <input id="quoteFormQuote" name="quote" type="text" class="form-control"

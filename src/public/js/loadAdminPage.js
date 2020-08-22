@@ -30,7 +30,6 @@ document.addEventListener('submit', async function(e){
           e.preventDefault();
 
           const deleteImageId = e.target.id.replace("deleteImage", "")
-          console.log(deleteImageId)
 
           //click on the button in order to dismiss the popover.
           const deleteButtonId = document.getElementById(`deleteButton${deleteImageId}`)
@@ -49,6 +48,26 @@ document.addEventListener('submit', async function(e){
         if (response.status >= 400) {
             console.error(result)
         }
+     }
+
+     if (e.target && e.target.id.startsWith("deleteQuote")){
+        e.preventDefault();
+
+        const deleteQuoteId = e.target.id.replace("deleteQuote", "")
+
+        //click on the button in order to dismiss the popover.
+        const deleteButtonId = document.getElementById(`deleteButton${deleteQuoteId}`)
+        deleteButtonId.click();
+        
+      //make a delete request to get rid of the quote.
+      const response = await fetch(`/quotes/${deleteQuoteId}`, {
+          method: "DELETE"
+      })
+      let result = await response.json();
+      if (response.status >= 400) {
+          console.error(result)
+      }
+      loadQuoteTable(quoteIndex, quotesPerPage)
      }
  });
 
@@ -88,12 +107,17 @@ const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${pag
             if (quote.verified){
                 newRow.classList.add("bg-success")
             }
-            for (const i in [0, 1, 2, 3]){
-                var newArray = [`${page * limit + index+1}`, quote.quote, quote.author, "TEST"]
+            for (const i in [0, 1, 2]){
+                var newArray = [`${page * limit + index+1}`, quote.quote, quote.author]
                 var newCell = newRow.insertCell(i);
                 var newText = document.createTextNode(newArray[i]);
                 newCell.appendChild(newText)
             }
+
+            var newButtonGroup = newRow.insertCell(3)
+            const btnGroup = quoteButtonGroup(quote)
+            newButtonGroup.appendChild(btnGroup)
+
             index += 1
         })
     }
@@ -101,6 +125,80 @@ const loadQuoteTable = (page, limit) => fetch(`/admin/getQuoteEntries?page=${pag
     document.querySelector("#quoteTable tbody").remove()
     document.getElementById("quoteTable").appendChild(newQuoteTableBody)
 })
+
+//creates quoteButtonGroup
+//TODO: finish this up
+const quoteButtonGroup = (quote) => {
+
+    const group = document.createElement("div")
+    group.classList.add("btn-group")
+    group.setAttribute("role", "group")
+    group.setAttribute("aria-label", `Quote button group ${quote._id.toString()}`)
+
+    //add on delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.id = `deleteButton${quote._id.toString()}`
+    deleteButton.classList.add("btn")
+    deleteButton.classList.add("btn-danger")
+    deleteButton.setAttribute("data-toggle", "popover")
+    deleteButton.title = "Delete Image"
+    deleteButton.innerHTML = '<i class="fa fa-trash customIcon"></i>'
+    deleteButton.setAttribute("data-content", `<form id = "deleteQuote${quote._id.toString()}"><p>Are you sure?</p><input type="submit" id = "submit" value="Yes, delete it!"></form>`)
+    group.appendChild(deleteButton)
+
+    //add on modify button
+    const modifyButton = document.createElement("button");
+    modifyButton.type = "button";
+    modifyButton.classList.add("btn")
+    modifyButton.classList.add("btn-primary")
+    modifyButton.title = "Modify Image"
+    modifyButton.innerHTML = '<i class="fa fa-edit customIcon"></i>'
+    modifyButton.setAttribute("data-toggle", "modal")
+    modifyButton.setAttribute("data-target", "#patchQuoteAdminModal")
+    //populate the image form with values
+    modifyButton.onclick = async function () {
+        const quoteFormId = document.getElementById("quoteFormId")
+        const quoteFormQuote = document.getElementById("quoteFormQuote")
+        const quoteFormAuthor = document.getElementById("quoteFormAuthor")
+        quoteFormId.value = quote._id.toString()
+        quoteFormQuote.value = quote.quote
+        quoteFormAuthor.value = quote.author
+    }
+    
+    group.appendChild(modifyButton)
+
+    //add on toggle visibility button
+    const toggleButton = document.createElement("button");
+    toggleButton.type = "button";
+    toggleButton.classList.add("btn")
+    toggleButton.classList.add("btn-info")
+    toggleButton.title = "Toggle Visibility"
+    toggleButton.innerHTML = '<i class="fa fa-eye customIcon"></i>'
+    //the following function will update the visibility of the image.
+    toggleButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        const data = {
+            "verified" : !quote.verified
+        }
+        //make a patch request to change the visibility of the image.
+        const response = await fetch(`/quotes/${quote._id.toString()}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        let result = await response.json();
+        if (response.status >= 400) {
+            console.error(result)
+        }
+        loadQuoteTable(imageIndex, imagesPerPage)
+    })
+    group.appendChild(toggleButton)
+    
+    return group
+}
 
 /**
  * This function patches the quote based off form-data.
@@ -112,15 +210,15 @@ const patchQuote = async (event) => {
     const quoteFormQuote = document.getElementById("quoteFormQuote")
     const quoteFormAuthor = document.getElementById("quoteFormAuthor")
     const data = {
-        "photographer": quoteFormQuote.value,
-        "descriptionAlt": quoteFormAuthor.value
+        "quote": quoteFormQuote.value,
+        "author": quoteFormAuthor.value
     }
 
-    //get image id
-    const imageFormId = document.getElementById("imageFormId")
+    //get quote id
+    const quoteFormId = document.getElementById("quoteFormId")
     
     //make a delete request to get rid of the image.
-    const response = await fetch(`/quotes/${imageFormId.value}`, {
+    const response = await fetch(`/quotes/${quoteFormId.value}`, {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
@@ -129,7 +227,6 @@ const patchQuote = async (event) => {
     })
 
     let result = await response.json();
-    console.log(result)
     if (response.status >= 400) {
         console.error(result)
     }
@@ -338,7 +435,6 @@ const patchImage = async (event) => {
     })
 
     let result = await response.json();
-    console.log(result)
     if (response.status >= 400) {
         console.error(result)
     }

@@ -45,7 +45,7 @@ const displayedQuote = document.getElementById("displayedQuote")
 fetch("/randomQuote").then(response => {
     return response.json()
 }).then(data => {
-    displayedQuote.innerText = `"${data.quote} - ${data.author}`
+    displayedQuote.innerText = `"${data.quote}" - ${data.author}`
 })
 
 
@@ -59,7 +59,7 @@ fetch("/randomImage").then(async (response) => {
     if (Object.keys(data).length) {
         nuggetPhoto.src = 'data:image/png;base64,' + data.imageData.toString("base-64")
         nuggetPhoto.alt = data.descriptionAlt;
-        photographer.value = "Photo by " + data.photographer;
+        photographer.innerText = "Photo by " + data.photographer;
     }
     /**
     //only load in image if response is nonempty
