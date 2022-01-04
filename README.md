@@ -1,15 +1,20 @@
 # NuggetLovesYou
 ## A good website for an even greater dog.
-whydaniel, december 2020.
+whydaniel, december 2021 - january 2022.
 
 ### About this Website
-This website was created during the summer of 2020 as a dedication to Nugget, Duke's residential dog. Nugget cured my fear of dogs. Nugget is a gift from doG backwards. Nugget is among my top 3 reasons I still go to Duke, and I've lived in the same dorm as Zion. Even though many of us could not be there on-campus, this website was created to remind people of Nugget's joyous energy and to bring a little bit of happiness into people's lives amidst the COVID-19 pandemic. However, the initial launch failed due to a unappealing mobile view and lack of Nugget photos. Which leads into version 2.
+This website was created during the summer of 2020 as a dedication to Nugget, Duke's residential dog. Nugget cured my fear of dogs. Nugget is a gift from doG backwards. Nugget is among my top 3 reasons I still go to Duke, and I've lived in the same dorm as Zion. Even though many of us could not be there on-campus, this website was created to remind people of Nugget's joyous energy and to bring a little bit of happiness into people's lives amidst the COVID-19 pandemic. However, the initial launch failed due to a unappealing mobile view and lack of Nugget photos. Which leads into version 2. 
 
-With the suggestions of Yasa Baig (@yasab27), this website is being recoded over winter break using a separate React frontend and a Strapi backend.
+With the suggestions of Yasa Baig ([@yasab27](https://github.com/yasab27)), this website is being recoded over winter break using a different React frontend.
 
 Version 1 (HTML/CSS/Bootstrap Frontend + Node.js/Express/MongoDB Backend) can be found on the versionOne branch of this repo.
 
+### TODO List
+- Only other files you should have to change is App.cs, App.js, assets, assets.json
+- Replace favicon.io, logo192.png, logo512.png, and manifest.json to change the header.
+
 ### Dev Log
+- December 2021: Decided to revamp this thing again!
 - Made this README.md page and backend progress
 
 # Getting Started with Create React App
