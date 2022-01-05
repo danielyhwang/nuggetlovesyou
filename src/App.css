@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.testRotate{
+  transform: 'rotate(-5deg)'
+}
+
+.cardLeft{
+  transform: 'rotate(-5deg)'
+}
+
+.cardMiddle{
+
+}
+
+.cardRight{
+  transform: 'rotate(5deg)'
+}
