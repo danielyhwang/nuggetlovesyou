@@ -22,20 +22,40 @@ import testImageSrc from "./Wilson-04-14-2020.jpg"
 class App extends React.Component {
   constructor(props){
     super(props);
+
+    const imageArray = new Array(3).fill(null);
+    imageArray[1] = {
+        "imageSrc": "/assets/Wilson-04-14-2020.jpg",
+        "imageAlt": "Nugget in front of Wilson",
+        "photographer" : "Keith Upchurch"
+    };
+
     this.state = {
       testImage : {
         "imageSrc": testImageSrc,
         "imageAlt": "Nugget in front of Wilson",
         "photographer" : "Keith Upchurch"
       },
-      images : new Array(3).fill(null),
-      currentObject : -1
+      images : imageArray,
+      currentObject : 2, //start with a card in the middle
+      backgroundStyle: {
+        backgroundColor: "#FFFFFF"
+      }
     }
+  }
+
+  handleClick() {
+    console.log("Test!")
+    this.setState({
+      backgroundStyle: {
+        backgroundColor: "#" + Math.floor(0xFFFFFF * Math.random()).toString(16)
+      }
+    })
   }
   
   render() {
     return (
-      <Container>
+      <Container fluid style = {this.state.backgroundStyle}>
         <Grid>
           <Grid.Row verticalAlign = 'top'>
             <Grid.Column width = {4}>
@@ -44,12 +64,12 @@ class App extends React.Component {
               </Button>
             </Grid.Column>
             <Grid.Column textAlign = 'center' width = {8}>
-              <Button floated = "center">
+              <Button floated = "center" onClick = {() => this.handleClick()}>
                 Nugget Loves You!
               </Button>
             </Grid.Column>
             <Grid.Column width = {4}>
-              <Button icon floated = 'right'>
+              <Button icon floated = 'right' onClick = {() => this.props.onClick()}>
                 <Icon name = 'info circle'/>
               </Button>
             </Grid.Column>
@@ -57,14 +77,14 @@ class App extends React.Component {
         </Grid>
         
         <Card centered>
-        <Image src={`${this.state.testImage.imageSrc}`} alt = {`${this.state.testImage.imageAlt}`} wrapped ui={false} />
+        <Image src={`${testImageSrc}`} alt = {"Nugget in front of Wilson"} wrapped ui={false} />
         <Card.Content>
           <Card.Header>This is Nugget.</Card.Header>
           <Card.Meta>
             <span className='date'>She loves you.</span>
           </Card.Meta>
           <Card.Description>
-            You look quite nice today.
+            Click on the Nugget Loves You button for more Nugget!
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
