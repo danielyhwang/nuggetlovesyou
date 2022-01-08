@@ -22,35 +22,42 @@ import testImageSrc from "./Wilson-04-14-2020.jpg"
 class App extends React.Component {
   constructor(props){
     super(props);
-
-    const imageArray = new Array(3).fill(null);
-    imageArray[1] = {
-        "imageSrc": "/assets/Wilson-04-14-2020.jpg",
-        "imageAlt": "Nugget in front of Wilson",
-        "photographer" : "Keith Upchurch"
-    };
-
     this.state = {
-      testImage : {
-        "imageSrc": testImageSrc,
-        "imageAlt": "Nugget in front of Wilson",
-        "photographer" : "Keith Upchurch"
-      },
-      images : imageArray,
-      currentObject : 2, //start with a card in the middle
+      images : [
+        null,
+        {
+          "imageSrc": require("/Wilson-04-14-2020.jpg"),
+          "imageAlt": "This is Nugget.",
+          "date" : "She loves you.",
+          "photographer" : "Keith Upchurch"
+        },
+        null
+      ],
+      messages : [
+        null,
+        "Click on the Nugget Loves You button for more Nugget!",
+        null
+      ],
+      currentCard: 1,
       backgroundStyle: {
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#FFFFFF",
+        height: '100vh'
       }
     }
   }
 
   handleClick() {
-    console.log("Test!")
+    const test = [1, 2, 3]
+    test.splice(this.state.currentCard)
+    const newCard = test[Math.floor(Math.random() * 2)]
+    
     this.setState({
       backgroundStyle: {
-        backgroundColor: "#" + Math.floor(0xFFFFFF * Math.random()).toString(16)
+        backgroundColor: "#" + Math.floor(0xFFFFFF * Math.random()).toString(16),
+        height: '100vh' 
       }
     })
+    console.log(this.state.currentCard);
   }
   
   render() {
@@ -64,36 +71,39 @@ class App extends React.Component {
               </Button>
             </Grid.Column>
             <Grid.Column textAlign = 'center' width = {8}>
-              <Button floated = "center" onClick = {() => this.handleClick()}>
+              <Button onClick = {() => this.handleClick()}>
                 Nugget Loves You!
               </Button>
             </Grid.Column>
             <Grid.Column width = {4}>
-              <Button icon floated = 'right' onClick = {() => this.props.onClick()}>
+              <Button icon floated = 'right'>
                 <Icon name = 'info circle'/>
               </Button>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        
-        <Card centered>
-        <Image src={`${testImageSrc}`} alt = {"Nugget in front of Wilson"} wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>This is Nugget.</Card.Header>
-          <Card.Meta>
-            <span className='date'>She loves you.</span>
-          </Card.Meta>
-          <Card.Description>
-            Click on the Nugget Loves You button for more Nugget!
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <a>
-            <Icon name='camera' />
-            Photo by {`${this.state.testImage.photographer}`}
-          </a>
-        </Card.Content>
-      </Card>
+
+        <Grid.Column>
+          <Card centered>
+            <Image src={`${this.state.images[1].imageSrc}`} alt = {`${this.state.images[1].imageAlt}`} wrapped ui={false} />
+            <Card.Content>
+              <Card.Header>{this.state.images[1].imageAlt}</Card.Header>
+              <Card.Meta>
+                <span className='date'>{this.state.images[1].date}</span>
+              </Card.Meta>
+              <Card.Description>
+                {this.state.messages[1]}
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <a>
+                <Icon name='camera' />
+                Photo by {this.state.images[1].photographer}
+              </a>
+            </Card.Content>
+          </Card>
+        </Grid.Column>
+
     </Container>
     );
   }
